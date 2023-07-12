@@ -1,0 +1,20 @@
+@import '../../../../../../../../scss/variables/colors';
+@import '../../../../../../../../scss/common';
+
+.asana-chat-snippet {
+  @include message-bubble($grey-2);
+}
+
+.asana-chat-snippet-title {
+  margin: 0;
+}
+
+.asana-chat-snippet-details {
+  border-left: 2px solid green;
+  margin-top: 5px;
+  padding-left: 10px;
+}
+
+.asana-chat-link {
+  font-size: 12px;
+}
