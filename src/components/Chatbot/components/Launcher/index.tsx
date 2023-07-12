@@ -1,9 +1,7 @@
 import cn from "classnames";
 import Badge from "./components/Badge";
 import "./styles.scss";
-//@ts-ignore
 import launcher_open from "./assets/launcher_button.svg";
-//@ts-ignore
 import launcher_close from "./assets/clear-button.svg";
 import { useDispatch, useSelector } from "../../../../store";
 import { toggleChat } from "../../../../store/slices/behavior";

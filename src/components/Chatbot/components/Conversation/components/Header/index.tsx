@@ -1,9 +1,6 @@
 import "./styles.scss";
-//@ts-ignore
 import robot from "./assets/robot.png";
-//@ts-ignore
 import close from "./assets/close.svg";
-//@ts-ignore
 import reset from "./assets/reset.svg";
 import { useDispatch } from "../../../../../../store";
 import { resetChat, toggleChat } from "../../../../../../store/slices/behavior";

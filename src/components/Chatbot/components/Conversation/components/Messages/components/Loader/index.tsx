@@ -1,5 +1,4 @@
 import "./styles.scss";
-//@ts-ignore
 import logo from "../../../Header/assets/robot.png";
 
 function Loader() {

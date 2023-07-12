@@ -18,9 +18,7 @@ import {
   updateCaret,
 } from "../../../../../../utils/contentEditable";
 import "./style.scss";
-//@ts-ignore
 import send from "./assets/send.svg";
-//@ts-ignore
 import emoji from "./assets/emoji.svg";
 const brRegex = /<br>/g;
 
