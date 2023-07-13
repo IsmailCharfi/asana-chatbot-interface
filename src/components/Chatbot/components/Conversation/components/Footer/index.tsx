@@ -22,7 +22,6 @@ import disabledSend from "./assets/disabled-send.svg";
 import activeSend from "./assets/active-send.svg";
 import disabledEmoji from "./assets/disabled-emoji.svg";
 import activeEmoji from "./assets/active-emoji.svg";
-import emoji from "./assets/emoji.svg";
 const brRegex = /<br>/g;
 
 export interface ISenderRef {
@@ -199,6 +198,23 @@ export default function Footer() {
     <div className="asana-chat-footer">
       {pickerStatus && (
         <Picker
+          i18n={{
+            categories: {
+              activity: "Activités",
+              custom: "Personnalisé",
+              flags: "Drapeaux",
+              foods: "Nourriture",
+              nature: "Nature",
+              objects: "Objets",
+              people: "Personnes",
+              places: "Places",
+              recent: "Récent",
+              search: "Recherche",
+              symbols: "Symboles",
+            },
+            notfound: "Pas trouvé",
+            search: "Recherche",
+          }}
           style={{
             position: "absolute",
             bottom: pickerOffset,
@@ -209,20 +225,17 @@ export default function Footer() {
         />
       )}
       <div ref={refContainer} className="asana-chat-sender">
-        <button
-          className={cn({
-            "asana-chat-picker-btn": true,
-            active: !disabledInput,
-          })}
-          type="submit"
-          onClick={disabledInput ? () => {} : handlerPressEmoji}
-        >
+        <div className="asana-chat-picker-btn">
           <img
             src={disabledInput ? disabledEmoji : activeEmoji}
-            className="asana-chat-picker-icon"
-            alt=""
+            className={cn({
+              "asana-chat-footer-icon": true,
+              active: !disabledInput,
+            })}
+            alt="Emoji Picker"
+            onClick={disabledInput ? () => {} : handlerPressEmoji}
           />
-        </button>
+        </div>
         <div
           className={cn("asana-chat-new-message", {
             "asana-chat-message-disable": disabledInput,
@@ -239,20 +252,16 @@ export default function Footer() {
             onKeyDown={handlerOnKeyDown}
           />
         </div>
-        <button
-          type="submit"
-          className="asana-chat-send"
+        <img
           onClick={handlerSendMessage}
-        >
-          <img
-            src={disabledInput ? disabledSend : activeSend}
-            className={cn({
-              "asana-chat-send-icon": true,
-              active: !disabledInput,
-            })}
-            alt={"Envoyer"}
-          />
-        </button>
+          src={disabledInput ? disabledSend : activeSend}
+          className={cn({
+            "asana-chat-send": true,
+            "asana-chat-footer-icon": true,
+            active: !disabledInput,
+          })}
+          alt={"Envoyer"}
+        />
       </div>
     </div>
   );

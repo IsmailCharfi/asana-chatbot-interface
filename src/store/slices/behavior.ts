@@ -25,6 +25,8 @@ const slice = createSlice({
     },
     resetChat(state: BehaviorState, action: PayloadAction) {
       state.reset = !state.reset;
+      state.disabledInput = false;
+      state.messageLoader = false;
     },
   },
 });
