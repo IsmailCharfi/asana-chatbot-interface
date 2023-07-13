@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import format from "date-fns/format";
-import { Link, MessageTypes } from "../../../../../../store/types";
+import { MessageTypes } from "../../../../../../store/types";
 import { MESSAGE_SENDER } from "../../../../../../constants";
 import Loader from "./components/Loader";
 import "./styles.scss";
 import { scrollToBottom } from "../../../../../../utils/messages";
-//@ts-ignore
 import logo from "../Header/assets/robot.png";
 import { useDispatch, useSelector } from "../../../../../../store";
 import {
@@ -25,24 +24,18 @@ function Messages() {
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    // @ts-ignore
     scrollToBottom(messageRef.current);
     if (showChat && badgeCount) {
-      //@ts-ignore
       dispatch(markAllMessagesRead());
     } else
       dispatch(
-        //@ts-ignore
         setBadgeCount(messages.filter((message) => message.unread).length)
       );
-  }, [messages, badgeCount, showChat]);
+  }, [messages, badgeCount, showChat, dispatch]);
 
-  const getComponentToRender = (message: MessageTypes | Link) => {
+  const getComponentToRender = (message: MessageTypes) => {
     const ComponentToRender = message.component;
-    return (
-      //@ts-ignore
-      <ComponentToRender message={message} />
-    );
+    return <ComponentToRender message={message} />;
   };
 
   const isClient = (sender: any) => sender === MESSAGE_SENDER.CLIENT;

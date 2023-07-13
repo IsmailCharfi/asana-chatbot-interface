@@ -15,18 +15,6 @@ export interface MessageTypes extends BaseMessage {
   text: string;
 }
 
-export interface Link extends BaseMessage {
-  title: string;
-  link: string;
-  target: string;
-}
-
-export interface LinkParams {
-  link: string;
-  title: string;
-  target?: string;
-}
-
 export interface BehaviorState {
   showChat: boolean;
   disabledInput: boolean;
@@ -35,6 +23,6 @@ export interface BehaviorState {
 }
 
 export interface MessagesState {
-  messages: (MessageTypes | Link)[];
+  messages: MessageTypes[];
   badgeCount: number;
 }

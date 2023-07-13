@@ -38,3 +38,11 @@
     cursor: pointer;
   }
 }
+
+.dialog--button-confirm {
+  background-color: $primary;
+}
+
+.dialog--container {
+  z-index: 1000000;
+}

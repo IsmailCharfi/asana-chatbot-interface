@@ -57,10 +57,13 @@
 .asana-chat-send, .asana-chat-picker-btn {
   background: $grey-2;
   border: 0;
-  cursor: pointer;
 
   .asana-chat-send-icon {
     height: 25px;
+  }
+
+  .active {
+    cursor: pointer;
   }
 }
 

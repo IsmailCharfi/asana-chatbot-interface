@@ -15,9 +15,7 @@ function Launcher() {
   }));
 
   const toggle = () => {
-    //@ts-ignore
     dispatch(toggleChat());
-    //@ts-ignore
     if (!showChat) dispatch(setBadgeCount(0));
   };
 

@@ -1,11 +1,10 @@
 import Message from "../components/Chatbot/components/Conversation/components/Messages/components/Message";
-import Snippet from "../components/Chatbot/components/Conversation/components/Messages/components/Snippet";
 import {
   MESSAGES_TYPES,
   MESSAGE_SENDER,
   MESSAGE_BOX_SCROLL_DURATION,
 } from "../constants";
-import { MessageTypes as MessageI, Link, LinkParams } from "../store/types";
+import { MessageTypes as MessageI } from "../store/types";
 
 export function createNewMessage(
   text: string,
@@ -21,21 +20,6 @@ export function createNewMessage(
     showAvatar: true,
     customId: id,
     unread: sender === MESSAGE_SENDER.RESPONSE,
-  };
-}
-
-export function createLinkSnippet(link: LinkParams, id?: string): Link {
-  return {
-    type: MESSAGES_TYPES.SNIPPET.LINK,
-    component: Snippet,
-    title: link.title,
-    link: link.link,
-    target: link.target || "_blank",
-    sender: MESSAGE_SENDER.RESPONSE,
-    timestamp: new Date(),
-    showAvatar: true,
-    customId: id,
-    unread: true,
   };
 }
 

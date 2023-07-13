@@ -18,7 +18,10 @@ import {
   updateCaret,
 } from "../../../../../../utils/contentEditable";
 import "./style.scss";
-import send from "./assets/send.svg";
+import disabledSend from "./assets/disabled-send.svg";
+import activeSend from "./assets/active-send.svg";
+import disabledEmoji from "./assets/disabled-emoji.svg";
+import activeEmoji from "./assets/active-emoji.svg";
 import emoji from "./assets/emoji.svg";
 const brRegex = /<br>/g;
 
@@ -47,6 +50,11 @@ export default function Footer() {
 
   useEffect(() => {
     setFirefox(isFirefox());
+
+    const sendIcon = document.getElementById("asana-chat-send-icon");
+    if (sendIcon) {
+      sendIcon.style.fill = "red";
+    }
   }, []);
 
   useImperativeHandle(senderRef, () => {
@@ -59,20 +67,38 @@ export default function Footer() {
     if (!userInput.trim()) {
       return;
     }
-    //@ts-ignore
+
     dispatch(toggleInputDisabled());
-    //@ts-ignore
     dispatch(addUserMessage(userInput));
-    //@ts-ignore
     dispatch(toggleMsgLoader());
-    setTimeout(() => {
-      //@ts-ignore
-      dispatch(addResponseMessage(userInput));
-      //@ts-ignore
+
+    try {
+      const response = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: {
+          ContentType: "application/json",
+        },
+        body: JSON.stringify({
+          prompt: userInput.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(addResponseMessage(data.text));
+        dispatch(toggleMsgLoader());
+        dispatch(toggleInputDisabled());
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      dispatch(
+        addResponseMessage(
+          "Une erreur est survenue. Merci de réessayer plus tard."
+        )
+      );
       dispatch(toggleMsgLoader());
-      //@ts-ignore
-      dispatch(toggleInputDisabled());
-    }, 5000);
+    }
   };
 
   const onSelectEmoji = (emoji: any) => {
@@ -184,11 +210,18 @@ export default function Footer() {
       )}
       <div ref={refContainer} className="asana-chat-sender">
         <button
-          className="asana-chat-picker-btn"
+          className={cn({
+            "asana-chat-picker-btn": true,
+            active: !disabledInput,
+          })}
           type="submit"
-          onClick={handlerPressEmoji}
+          onClick={disabledInput ? () => {} : handlerPressEmoji}
         >
-          <img src={emoji} className="asana-chat-picker-icon" alt="" />
+          <img
+            src={disabledInput ? disabledEmoji : activeEmoji}
+            className="asana-chat-picker-icon"
+            alt=""
+          />
         </button>
         <div
           className={cn("asana-chat-new-message", {
@@ -211,7 +244,14 @@ export default function Footer() {
           className="asana-chat-send"
           onClick={handlerSendMessage}
         >
-          <img src={send} className="asana-chat-send-icon" alt={"Envoyer"} />
+          <img
+            src={disabledInput ? disabledSend : activeSend}
+            className={cn({
+              "asana-chat-send-icon": true,
+              active: !disabledInput,
+            })}
+            alt={"Envoyer"}
+          />
         </button>
       </div>
     </div>

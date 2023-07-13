@@ -1,4 +1,3 @@
-import format from "date-fns/format";
 import { MessageTypes } from "../../../../../../../../store/types";
 import "./styles.scss";
 

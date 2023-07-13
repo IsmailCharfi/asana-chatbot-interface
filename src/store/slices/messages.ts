@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AppThunk } from "../index";
-import { MessagesState, LinkParams } from "../types";
+import { MessagesState } from "../types";
 import { MESSAGE_SENDER } from "../../constants";
-import { createNewMessage, createLinkSnippet } from "../../utils/messages";
+import { createNewMessage } from "../../utils/messages";
 
 const initialState: MessagesState = {
   messages: [],
@@ -40,15 +40,6 @@ const slice = createSlice({
         ),
       ];
       state.badgeCount++;
-    },
-    addLinkSnippet(
-      state: MessagesState,
-      action: PayloadAction<{ link: LinkParams; id?: string }>
-    ) {
-      state.messages = [
-        ...state.messages,
-        createLinkSnippet(action.payload.link, action.payload.id),
-      ];
     },
     dropMessages(state: MessagesState, action: PayloadAction) {
       state.messages = [];
@@ -96,12 +87,6 @@ export const addResponseMessage =
   (text: string, id?: string): AppThunk =>
   async (dispatch) => {
     dispatch(slice.actions.addResponseMessage({ text, id }));
-  };
-
-export const addLinkSnippet =
-  (link: LinkParams, id?: string): AppThunk =>
-  async (dispatch) => {
-    dispatch(slice.actions.addLinkSnippet({ link, id }));
   };
 
 export const dropMessages = (): AppThunk => async (dispatch) => {

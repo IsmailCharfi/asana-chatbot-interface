@@ -12,15 +12,13 @@ export default function AsanaChatbot() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(dropMessages());
     dispatch(
-      //@ts-ignore
       addResponseMessage(
         "Bonjour! je suis votre assistant Asana n'hésitez pas à me poser des questions!"
       )
     );
-  }, [reset]);
+  }, [reset, dispatch]);
 
   return (
     <div
