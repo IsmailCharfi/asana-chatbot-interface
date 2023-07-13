@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AppThunk } from "../index";
-import { MessagesState } from "../types";
+import { MessageHistory, MessagesState } from "../types";
 import { MESSAGE_SENDER } from "../../constants";
 import { createNewMessage } from "../../utils/messages";
 
 const initialState: MessagesState = {
+  history: [],
   messages: [],
   badgeCount: 0,
 };
@@ -72,6 +73,23 @@ const slice = createSlice({
     ) {
       state.badgeCount = action.payload.count;
     },
+    pushHistory(
+      state: MessagesState,
+      action: PayloadAction<{ messageHistory: MessageHistory }>
+    ) {
+      const array = [...state.history];
+
+      array.push(action.payload.messageHistory);
+
+      if (array.length > 3) {
+        array.shift();
+      }
+
+      state.history = array;
+    },
+    clearHistory(state: MessagesState, action: PayloadAction) {
+      state.history = [];
+    },
   },
 });
 
@@ -108,5 +126,15 @@ export const setBadgeCount =
   async (dispatch) => {
     dispatch(slice.actions.setBadgeCount({ count }));
   };
+
+export const pushHistory =
+  (messageHistory: MessageHistory): AppThunk =>
+  async (dispatch) => {
+    dispatch(slice.actions.pushHistory({ messageHistory }));
+  };
+
+export const clearHistory = (): AppThunk => async (dispatch) => {
+  dispatch(slice.actions.clearHistory());
+};
 
 export default slice;

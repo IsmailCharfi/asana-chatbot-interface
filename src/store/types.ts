@@ -22,7 +22,13 @@ export interface BehaviorState {
   reset: boolean;
 }
 
+export interface MessageHistory {
+  client: string;
+  bot: string;
+}
+
 export interface MessagesState {
+  history: MessageHistory[];
   messages: MessageTypes[];
   badgeCount: number;
 }

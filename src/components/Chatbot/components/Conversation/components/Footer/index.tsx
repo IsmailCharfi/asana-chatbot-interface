@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "../../../../../../store";
 import {
   addUserMessage,
   addResponseMessage,
+  pushHistory,
 } from "../../../../../../store/slices/messages";
 import {
   toggleMsgLoader,
@@ -33,8 +34,9 @@ export default function Footer() {
   const senderRef = useRef<ISenderRef>(null!);
   const [pickerStatus, setPicket] = useState(false);
   const dispatch = useDispatch();
-  const { disabledInput } = useSelector((state) => ({
+  const { disabledInput, history } = useSelector((state) => ({
     disabledInput: state.behavior.disabledInput,
+    history: state.messages.history,
   }));
   const showChat = useSelector((state) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
@@ -75,15 +77,22 @@ export default function Footer() {
       const response = await fetch("http://localhost:5000/chat", {
         method: "POST",
         headers: {
-          ContentType: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          history,
           prompt: userInput.trim(),
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
+        dispatch(
+          pushHistory({
+            client: userInput,
+            bot: data.text,
+          })
+        );
         dispatch(addResponseMessage(data.text));
         dispatch(toggleMsgLoader());
         dispatch(toggleInputDisabled());
