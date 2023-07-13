@@ -19,10 +19,11 @@ import {
   updateCaret,
 } from "../../../../../../utils/contentEditable";
 import "./style.scss";
-import disabledSend from "./assets/disabled-send.svg";
-import activeSend from "./assets/active-send.svg";
-import disabledEmoji from "./assets/disabled-emoji.svg";
-import activeEmoji from "./assets/active-emoji.svg";
+import disabledSend from "../../../../../../assets/disabled-send.svg";
+import activeSend from "../../../../../../assets/active-send.svg";
+import disabledEmoji from "../../../../../../assets/disabled-emoji.svg";
+import activeEmoji from "../../../../../../assets/active-emoji.svg";
+import BotException from "../../../../../../utils/BotException";
 const brRegex = /<br>/g;
 
 export interface ISenderRef {
@@ -32,16 +33,34 @@ export interface ISenderRef {
 export default function Footer() {
   const [pickerOffset, setOffset] = useState(0);
   const senderRef = useRef<ISenderRef>(null!);
-  const [pickerStatus, setPicket] = useState(false);
+  const pickerRef = useRef<HTMLDivElement | null>(null);
+  const [pickerStatus, setPicker] = useState(false);
   const dispatch = useDispatch();
-  const { disabledInput, history, apiPath, errorMessage } = useSelector(
-    (state) => ({
-      disabledInput: state.behavior.disabledInput,
-      history: state.messages.history,
-      apiPath: state.config.apiPath,
-      errorMessage: state.config.errorMessage,
-    })
-  );
+  const {
+    disabledInput,
+    history,
+    apiPath,
+    errorMessage,
+    onOpenEmoji,
+    onReceiveMessage,
+    onSendMessage,
+    onWaiting,
+    showEmoji,
+    sendMessageApiCall,
+    messages,
+  } = useSelector((state) => ({
+    messages: state.messages.messages,
+    disabledInput: state.behavior.disabledInput,
+    history: state.messages.history,
+    apiPath: state.config.apiPath,
+    errorMessage: state.config.errorMessage,
+    showEmoji: state.config.showEmoji,
+    onOpenEmoji: state.config.onOpenEmoji,
+    onSendMessage: state.config.onSendMessage,
+    onReceiveMessage: state.config.onReceiveMessage,
+    onWaiting: state.config.onWaiting,
+    sendMessageApiCall: state.config.sendMessageApiCall,
+  }));
   const showChat = useSelector((state) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const refContainer = useRef<HTMLDivElement>(null);
@@ -62,11 +81,47 @@ export default function Footer() {
     }
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target as Node)
+      ) {
+        setPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   useImperativeHandle(senderRef, () => {
     return {
       onSelectEmoji: handlerOnSelectEmoji,
     };
   });
+
+  const showError = () => {
+    dispatch(addResponseMessage(errorMessage));
+    dispatch(toggleMsgLoader());
+  };
+
+  const success = (userInput: string, response: string) => {
+    dispatch(
+      pushHistory({
+        client: userInput,
+        bot: response,
+      })
+    );
+    onReceiveMessage(response);
+    dispatch(addResponseMessage(response));
+    dispatch(toggleMsgLoader());
+    dispatch(toggleInputDisabled());
+    inputRef.current?.focus();
+  };
 
   const handleMessageSubmit = async (userInput: any) => {
     if (!userInput.trim()) {
@@ -75,37 +130,43 @@ export default function Footer() {
 
     dispatch(toggleInputDisabled());
     dispatch(addUserMessage(userInput));
+    onSendMessage(userInput, history);
     dispatch(toggleMsgLoader());
+    onWaiting(userInput);
 
     try {
-      const response = await fetch(`${apiPath}/chat`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          history,
-          prompt: userInput.trim(),
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(
-          pushHistory({
-            client: userInput,
-            bot: data.text,
-          })
+      if (!apiPath && !sendMessageApiCall) {
+        throw new BotException(
+          "You should provide either the apiPath or the callback function {sendMessageApiCall} to send the prompt to the API"
         );
-        dispatch(addResponseMessage(data.text));
-        dispatch(toggleMsgLoader());
-        dispatch(toggleInputDisabled());
-      } else {
-        throw new Error();
+      }
+
+      if (apiPath) {
+        const response = await fetch(`${apiPath}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            history,
+            prompt: userInput.trim(),
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          success(userInput, data.text);
+        } else {
+          throw new Error();
+        }
+      } else if (sendMessageApiCall) {
+        const data = await sendMessageApiCall(userInput, history, messages);
+        success(userInput, data.text);
       }
     } catch (error) {
-      dispatch(addResponseMessage(errorMessage));
-      dispatch(toggleMsgLoader());
+      showError();
+      if (error instanceof BotException) {
+        throw error;
+      }
     }
   };
 
@@ -114,12 +175,12 @@ export default function Footer() {
   };
 
   const togglePicker = () => {
-    setPicket((prevPickerStatus) => !prevPickerStatus);
+    setPicker((prevPickerStatus) => !prevPickerStatus);
   };
 
   const sendMessage = (event: any) => {
     handleMessageSubmit(event);
-    if (pickerStatus) setPicket(false);
+    if (pickerStatus) setPicker(false);
   };
 
   const handlerSendMessage = () => {
@@ -199,6 +260,7 @@ export default function Footer() {
   };
 
   const handlerPressEmoji = () => {
+    onOpenEmoji();
     togglePicker();
     checkSize();
   };
@@ -206,45 +268,50 @@ export default function Footer() {
   return (
     <div className="asana-chat-footer">
       {pickerStatus && (
-        <Picker
-          i18n={{
-            categories: {
-              activity: "Activités",
-              custom: "Personnalisé",
-              flags: "Drapeaux",
-              foods: "Nourriture",
-              nature: "Nature",
-              objects: "Objets",
-              people: "Personnes",
-              places: "Places",
-              recent: "Récent",
+        <div ref={pickerRef}>
+          <Picker
+           /*  i18n={{
+              categories: {
+                activity: "Activités",
+                custom: "Personnalisé",
+                flags: "Drapeaux",
+                foods: "Nourriture",
+                nature: "Nature",
+                objects: "Objets",
+                people: "Personnes",
+                places: "Places",
+                recent: "Récent",
+                search: "Recherche",
+                symbols: "Symboles",
+              },
+              notfound: "Pas trouvé",
               search: "Recherche",
-              symbols: "Symboles",
-            },
-            notfound: "Pas trouvé",
-            search: "Recherche",
-          }}
-          style={{
-            position: "absolute",
-            bottom: pickerOffset,
-            left: "0",
-            width: "100%",
-          }}
-          onSelect={onSelectEmoji}
-        />
-      )}
-      <div ref={refContainer} className="asana-chat-sender">
-        <div className="asana-chat-picker-btn">
-          <img
-            src={disabledInput ? disabledEmoji : activeEmoji}
-            className={cn({
-              "asana-chat-footer-icon": true,
-              active: !disabledInput,
-            })}
-            alt="Emoji Picker"
-            onClick={disabledInput ? () => {} : handlerPressEmoji}
+            }} */
+            style={{
+              position: "absolute",
+              bottom: pickerOffset,
+              left: "0",
+              width: "70%",
+              height: "70%"
+            }}
+            onSelect={onSelectEmoji}
           />
         </div>
+      )}
+      <div ref={refContainer} className="asana-chat-sender">
+        {showEmoji && (
+          <div className="asana-chat-picker-btn">
+            <img
+              src={disabledInput ? disabledEmoji : activeEmoji}
+              className={cn({
+                "asana-chat-footer-icon": true,
+                active: !disabledInput,
+              })}
+              alt="Emoji Picker"
+              onClick={disabledInput ? () => {} : handlerPressEmoji}
+            />
+          </div>
+        )}
         <div
           className={cn("asana-chat-new-message", {
             "asana-chat-message-disable": disabledInput,

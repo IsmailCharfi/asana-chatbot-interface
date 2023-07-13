@@ -1,22 +1,36 @@
 import cn from "classnames";
 import Badge from "./components/Badge";
 import "./styles.scss";
-import launcher_open from "./assets/launcher_button.svg";
-import launcher_close from "./assets/clear-button.svg";
 import { useDispatch, useSelector } from "../../../../store";
 import { toggleChat } from "../../../../store/slices/behavior";
 import { setBadgeCount } from "../../../../store/slices/messages";
 
 function Launcher() {
   const dispatch = useDispatch();
-  const { badgeCount, showChat } = useSelector((state) => ({
+  const {
+    badgeCount,
+    showChat,
+    openLauncherIcon,
+    closeLauncherIcon,
+    onLauncherClose,
+    onLauncherOpen,
+  } = useSelector((state) => ({
     badgeCount: state.messages.badgeCount,
     showChat: state.behavior.showChat,
+    openLauncherIcon: state.config.openLauncherIcon,
+    closeLauncherIcon: state.config.closeLauncherIcon,
+    onLauncherOpen: state.config.onLauncherOpen,
+    onLauncherClose: state.config.onLauncherClose,
   }));
 
   const toggle = () => {
     dispatch(toggleChat());
-    if (!showChat) dispatch(setBadgeCount(0));
+    if (!showChat) {
+      onLauncherOpen();
+      dispatch(setBadgeCount(0));
+    } else {
+      onLauncherClose();
+    }
   };
 
   return (
@@ -29,13 +43,13 @@ function Launcher() {
       {!showChat && <Badge badge={badgeCount} />}
       {showChat ? (
         <img
-          src={launcher_close}
+          src={closeLauncherIcon}
           className="asana-chat-close-launcher"
           alt={"Close"}
         />
       ) : (
         <img
-          src={launcher_open}
+          src={openLauncherIcon}
           className="asana-chat-open-launcher"
           alt={"Open"}
         />

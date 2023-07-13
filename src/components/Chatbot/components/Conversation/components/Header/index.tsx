@@ -1,20 +1,55 @@
 import { DialogModal, useModal } from "react-dialog-confirm";
 import { useDispatch, useSelector } from "../../../../../../store";
 import { resetChat, toggleChat } from "../../../../../../store/slices/behavior";
-import close from "./assets/close.svg";
-import reset from "./assets/reset.svg";
 import "./styles.scss";
 
 function Header() {
   const dispatch = useDispatch();
   const { openModal, closeModal } = useModal();
-  const { botName, botIcon } = useSelector((state) => state.config);
+  const {
+    botName,
+    botIcon,
+    confirmText,
+    closeIcon,
+    resetIcon,
+    onLauncherClose,
+    onReset,
+    afterReset,
+    showConfirm,
+    showReset,
+    fontFamily,
+  } = useSelector((state) => state.config);
+
   const resetChatBox = () => {
     dispatch(resetChat());
     closeModal();
   };
 
-  const toggleChatbox = () => dispatch(toggleChat());
+  const toggleChatbox = () => {
+    onLauncherClose();
+    dispatch(toggleChat());
+  };
+
+  const openConfirm = () => {
+    onReset();
+    if (showConfirm) {
+      openModal(
+        <DialogModal
+          titleStyle={{ fontFamily }}
+          icon={"warning"}
+          title={ confirmText }
+          confirm={"Oui"}
+          cancel={"Non"}
+          onConfirm={resetChatBox}
+          onCancel={() => closeModal()}
+          hasCancel={true}
+        />
+      );
+    } else {
+      resetChatBox();
+    }
+    afterReset();
+  };
 
   return (
     <div className="asana-chat-header">
@@ -23,27 +58,16 @@ function Header() {
         {botName}
       </h4>
       <div className="asana-chat-actions">
+        {showReset && (
+          <img
+            src={resetIcon}
+            className="asana-chat-action"
+            alt="Reset"
+            onClick={openConfirm}
+          />
+        )}
         <img
-          src={reset}
-          className="asana-chat-action"
-          alt="Reset"
-          onClick={() =>
-            openModal(
-              <DialogModal
-                titleStyle={{ fontFamily: "Lato, sans-serif" }}
-                icon={"warning"}
-                title={`Êtes-vous sûr.es de vouloir réinitialiser ${botName}`}
-                confirm={"Oui"}
-                cancel={"Non"}
-                onConfirm={resetChatBox}
-                onCancel={closeModal}
-                hasCancel={true}
-              />
-            )
-          }
-        />
-        <img
-          src={close}
+          src={closeIcon}
           className="asana-chat-action"
           alt="Fermer"
           onClick={toggleChatbox}

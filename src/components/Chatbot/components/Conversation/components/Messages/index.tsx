@@ -4,7 +4,6 @@ import { MESSAGE_SENDER } from "../../../../../../constants";
 import Loader from "./components/Loader";
 import "./styles.scss";
 import { scrollToBottom } from "../../../../../../utils/messages";
-import logo from "../Header/assets/robot.png";
 import { useDispatch, useSelector } from "../../../../../../store";
 import {
   markAllMessagesRead,
@@ -14,14 +13,23 @@ import { CSSTransition } from "react-transition-group";
 
 function Messages() {
   const dispatch = useDispatch();
-  const { messages, typing, showChat, badgeCount } = useSelector((state) => ({
-    messages: state.messages.messages,
-    badgeCount: state.messages.badgeCount,
-    typing: state.behavior.messageLoader,
-    showChat: state.behavior.showChat,
-  }));
-
   const messageRef = useRef<HTMLDivElement | null>(null);
+  const { messages, typing, showChat, badgeCount, botIcon, backgroundImage } =
+    useSelector((state) => ({
+      messages: state.messages.messages,
+      badgeCount: state.messages.badgeCount,
+      typing: state.behavior.messageLoader,
+      showChat: state.behavior.showChat,
+      botIcon: state.config.botIcon,
+      backgroundImage: state.config.backgroundImage,
+    }));
+
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.style.backgroundImage = `url(${backgroundImage})`;
+    }
+  }, [messageRef, backgroundImage]);
+
   useEffect(() => {
     scrollToBottom(messageRef.current);
     if (showChat && badgeCount) {
@@ -53,7 +61,7 @@ function Messages() {
           key={index}
         >
           {!isClient(message.sender) && message.showAvatar && (
-            <img src={logo} className={"asana-chat-avatar"} alt="profile" />
+            <img src={botIcon} className={"asana-chat-avatar"} alt="Bot" />
           )}
           {getComponentToRender(message)}
         </div>

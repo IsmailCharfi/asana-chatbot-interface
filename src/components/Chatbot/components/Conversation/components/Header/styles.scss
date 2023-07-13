@@ -37,10 +37,10 @@
   }
 }
 
-.dialog--asana-chat-button-confirm {
+.dialog--button-confirm {
   background-color: var(--asana-chat-primary);
 }
 
-.dialog--asana-chat-container {
-  z-index: 1000000;
+.dialog--container {
+  z-index: 10000000001;
 }

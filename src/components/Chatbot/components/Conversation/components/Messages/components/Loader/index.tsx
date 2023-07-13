@@ -1,11 +1,12 @@
+import { useSelector } from "../../../../../../../../store";
 import "./styles.scss";
-import logo from "../../../Header/assets/robot.png";
 
 function Loader() {
+  const { botIcon } = useSelector((state) => state.config);
   return (
     <>
       <div className={"asana-chat-message"}>
-        <img src={logo} className={"asana-chat-avatar"} alt="profile" />
+        <img src={botIcon} className={"asana-chat-avatar"} alt="Bot" />
         <div className="asana-chat-response">
           <div className="asana-chat-message-text">
             <div className="asana-chat-loader"></div>

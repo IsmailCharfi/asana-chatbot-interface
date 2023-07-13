@@ -1,15 +1,16 @@
 @import '../../scss/common';
 
 :root {
-  --asana-chat-black: #000000;
-  --asana-chat-white: #000000;
-  --asana-chat-shadow: #f4f7f9;
+  --asana-chat-grey-0: #808080;
+  --asana-chat-grey-2: #f4f7f9;
+  --asana-chat-shadow: #a7aaac;
   --asana-chat-primary: #fa5e88;
   --asana-chat-secondary: #f4f7f9;
   --asana-chat-primaryTextColor: #ffffff;
   --asana-chat-secondaryTextColor: #000000;
   --asana-chat-badgeColor: #f22424;
   --asana-chat-badgeTextColor: #ffffff;
+  --asana-chat-width: 550px;
   --asana-chat-fontFamily: 'Lato', sans-serif;
 }
 
@@ -20,6 +21,6 @@
   margin: 0 20px 20px 0;
   position: fixed;
   right: 0;
-  z-index: 9999;
+  z-index: 10000000000;
   font-family: var(--asana-chat-fontFamily);
 }

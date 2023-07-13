@@ -10,8 +10,15 @@ import {
   clearHistory,
   dropMessages,
 } from "../../store/slices/messages";
+import { ConfigState } from "../../store/types";
+import { setConfig } from "../../store/slices/config";
+import { Helmet } from "react-helmet-async";
 
-export default function AsanaChatbot() {
+type AsanaChatbotProps = {
+  config: Partial<ConfigState>;
+};
+
+export default function AsanaChatbot(props: AsanaChatbotProps) {
   const { showChat, reset, startMessage } = useSelector((state) => ({
     showChat: state.behavior.showChat,
     reset: state.behavior.reset,
@@ -27,33 +34,65 @@ export default function AsanaChatbot() {
   }, [reset, dispatch, startMessage]);
 
   useEffect(() => {
+    dispatch(setConfig(props.config));
+  }, [props.config]);
+
+  useEffect(() => {
     let root = document.documentElement;
 
     root.style.setProperty("--asana-chat-primary", config.primaryColor);
     root.style.setProperty("--asana-chat-secondary", config.secondaryColor);
-    root.style.setProperty("--asana-chat-primaryTextColor", config.primaryTextColor);
-    root.style.setProperty("--asana-chat-secondaryTextColor", config.secondaryTextColor);
+    root.style.setProperty(
+      "--asana-chat-primaryTextColor",
+      config.primaryTextColor
+    );
+    root.style.setProperty(
+      "--asana-chat-secondaryTextColor",
+      config.secondaryTextColor
+    );
     root.style.setProperty("--asana-chat-badgeColor", config.badgeColor);
-    root.style.setProperty("--asana-chat-badgeTextColor", config.badgeTextColor);
+    root.style.setProperty(
+      "--asana-chat-badgeTextColor",
+      config.badgeTextColor
+    );
     root.style.setProperty("--asana-chat-fontFamily", config.fontFamily);
+    root.style.setProperty("--asana-chat-width", config.width);
   }, [config]);
 
   return (
-    <div
-      className={cn({
-        "asana-chat-widget-container": true,
-        "asana-chat-close-widget-container ": !showChat,
-      })}
-    >
-      <CSSTransition
-        in={showChat}
-        timeout={300}
-        classNames="asana-chat-conversation-container"
-        unmountOnExit
+    <>
+      <Helmet>
+        {config.fontFamily.includes("Lato") && (
+          <>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link
+              rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossOrigin="anonymous"
+            />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+              rel="stylesheet"
+            />
+          </>
+        )}
+      </Helmet>
+      <div
+        className={cn({
+          "asana-chat-widget-container": true,
+          "asana-chat-close-widget-container ": !showChat,
+        })}
       >
-        <Conversation />
-      </CSSTransition>
-      <Launcher />
-    </div>
+        <CSSTransition
+          in={showChat}
+          timeout={300}
+          classNames="asana-chat-conversation-container"
+          unmountOnExit
+        >
+          <Conversation />
+        </CSSTransition>
+        <Launcher />
+      </div>
+    </>
   );
 }

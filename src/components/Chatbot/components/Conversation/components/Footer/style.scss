@@ -1,6 +1,6 @@
 .asana-chat-sender {
   align-items: flex-end;
-  background-color: var(--asana-chat-shadow);
+  background-color: var(--asana-chat-grey-2);
   border-radius: 0 0 10px 10px;
   display: flex;
   height: max-content;
@@ -48,12 +48,12 @@
 
   &[placeholder]:empty::before {
     content: attr(placeholder);
-    color: #808080; 
+    color: var(--asana-chat-grey-0); 
   }
 }
 
 .asana-chat-footer-icon {
-  background: var(--asana-chat-shadow);
+  background: var(--asana-chat-grey-2);
   border: 0;
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@
 }
 
 .asana-chat-message-disable {
-  background-color: var(--asana-chat-shadow);
+  background-color: var(--asana-chat-grey-2);
   cursor: not-allowed;
 }
 

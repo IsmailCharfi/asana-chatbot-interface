@@ -51,6 +51,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  color: var(--asana-chat-secondaryTextColor);
 
   .asana-chat-message-text {
     @include message-bubble(var(--asana-chat-secondary));

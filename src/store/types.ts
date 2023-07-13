@@ -34,7 +34,7 @@ export interface MessagesState {
 }
 
 export interface ConfigState {
-  apiPath: string;
+  apiPath: string | null;
   primaryColor: string;
   secondaryColor: string;
   primaryTextColor: string;
@@ -44,6 +44,31 @@ export interface ConfigState {
   fontFamily: string;
   botName: string;
   botIcon: string;
+  backgroundImage: string;
+  width: string;
   startMessage: string;
   errorMessage: string;
+  openLauncherIcon: string;
+  closeLauncherIcon: string;
+  closeIcon: string;
+  resetIcon: string;
+  confirmText: string;
+  showConfirm: boolean;
+  showEmoji: boolean;
+  showReset: boolean;
+  sendMessageApiCall:
+    | ((
+        prompt: string,
+        history: MessageHistory[],
+        messages: MessageTypes[]
+      ) => Promise<{ text: string }>)
+    | null;
+  onLauncherOpen: () => any;
+  onLauncherClose: () => any;
+  onReset: () => any;
+  afterReset: () => any;
+  onOpenEmoji: () => any;
+  onSendMessage: (message: string, history: MessageHistory[]) => any;
+  onReceiveMessage: (message: string) => any;
+  onWaiting: (clientMessage: string) => any;
 }
