@@ -38,7 +38,10 @@ export interface ConfigState {
   primaryColor: string;
   secondaryColor: string;
   primaryTextColor: string;
-  secondatyTextColor: string;
+  secondaryTextColor: string;
+  badgeColor: string;
+  badgeTextColor: string;
+  fontFamily: string;
   botName: string;
   botIcon: string;
   startMessage: string;

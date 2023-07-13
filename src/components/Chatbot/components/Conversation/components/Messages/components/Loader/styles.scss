@@ -1,13 +1,11 @@
-@import '../../../../../../../../scss/variables/colors';
-
 .asana-chat-loader {
   margin: 0.5rem;
   position: relative;
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: $primary;
-  color: $primary;
+  background-color: var(--asana-chat-primary);
+  color: var(--asana-chat-primary);
   animation: asana-chat-loader 1s infinite linear;
 }
 .asana-chat-loader::before, .asana-chat-loader::after {
@@ -21,8 +19,8 @@
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: $primary;
-  color: $primary;
+  background-color: var(--asana-chat-primary);
+  color: var(--asana-chat-primary);
   animation: asana-chat-loader-before 1s infinite linear;
 }
 .asana-chat-loader::after {
@@ -30,8 +28,8 @@
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: $primary;
-  color: $primary;
+  background-color: var(--asana-chat-primary);
+  color: var(--asana-chat-primary);
   animation: asana-chat-loader-after 1s infinite linear;
 }
 

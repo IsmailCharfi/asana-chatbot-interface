@@ -1,11 +1,9 @@
-@import '../../../../../../scss/variables/colors';
-
 .asana-chat-conversation-container {
 
   .asana-chat-header {
-    background-color: $primary;
+    background-color: var(--asana-chat-primary);
     border-radius: 10px 10px 0 0;
-    color: $white;
+    color: var(--asana-chat-primaryTextColor);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,10 +37,10 @@
   }
 }
 
-.dialog--button-confirm {
-  background-color: $primary;
+.dialog--asana-chat-button-confirm {
+  background-color: var(--asana-chat-primary);
 }
 
-.dialog--container {
+.dialog--asana-chat-container {
   z-index: 1000000;
 }

@@ -1,5 +1,4 @@
-@import '../../../../../../../../scss/variables/colors';
-@import '../../../../../../../../scss/common';
+@import "../../../../../../../../scss/common";
 
 .asana-chat-message {
   margin: 10px;
@@ -34,10 +33,10 @@
   display: flex;
   flex-direction: column;
   margin-left: auto;
-  color: $white;
+  color: var(--asana-chat-primaryTextColor);
 
   .asana-chat-message-text {
-    @include message-bubble($primary);
+    @include message-bubble(var(--asana-chat-primary));
 
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -54,7 +53,7 @@
   align-items: flex-start;
 
   .asana-chat-message-text {
-    @include message-bubble($grey-2);
+    @include message-bubble(var(--asana-chat-secondary));
   }
 }
 

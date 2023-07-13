@@ -1,8 +1,6 @@
-@import '../../../../../../scss/variables/colors';
-
 .asana-chat-sender {
   align-items: flex-end;
-  background-color: $grey-2;
+  background-color: var(--asana-chat-shadow);
   border-radius: 0 0 10px 10px;
   display: flex;
   height: max-content;
@@ -18,7 +16,7 @@
 }
 
 .asana-chat-new-message {
-  background-color: $white;
+  background-color: "white";
   border: 0;
   border-radius: 5px;
   padding: 10px 5px;
@@ -50,12 +48,12 @@
 
   &[placeholder]:empty::before {
     content: attr(placeholder);
-    color: $grey-0; 
+    color: #808080; 
   }
 }
 
 .asana-chat-footer-icon {
-  background: $grey-2;
+  background: var(--asana-chat-shadow);
   border: 0;
   display: flex;
   align-items: center;
@@ -72,7 +70,7 @@
 }
 
 .asana-chat-message-disable {
-  background-color: $grey-2;
+  background-color: var(--asana-chat-shadow);
   cursor: not-allowed;
 }
 
