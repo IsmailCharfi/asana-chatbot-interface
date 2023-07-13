@@ -4,20 +4,11 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "1.8.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.38",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "classnames": "^2.2.6",
-    "date-fns": "^2.11.1",
     "emoji-mart": "^3.0.1",
-    "markdown-it": "^8.4.1",
-    "markdown-it-link-attributes": "^2.1.0",
-    "markdown-it-sanitizer": "^0.4.3",
-    "markdown-it-sup": "^1.0.0",
     "node-sass": "^4.13.1",
     "react": "^17.0.2",
     "react-dialog-confirm": "^1.0.3",
@@ -28,6 +19,7 @@
     "redux": "4.2.0",
     "redux-devtools-extension": "2.13.9",
     "redux-thunk": "2.4.1",
+    "sanitize-html": "^2.11.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -57,7 +49,7 @@
   },
   "devDependencies": {
     "@types/emoji-mart": "^3.0.9",
-    "@types/markdown-it": "^12.2.3",
-    "@types/react-transition-group": "^4.4.6"
+    "@types/react-transition-group": "^4.4.6",
+    "@types/sanitize-html": "^2.9.0"
   }
 }

@@ -34,10 +34,14 @@ export default function Footer() {
   const senderRef = useRef<ISenderRef>(null!);
   const [pickerStatus, setPicket] = useState(false);
   const dispatch = useDispatch();
-  const { disabledInput, history } = useSelector((state) => ({
-    disabledInput: state.behavior.disabledInput,
-    history: state.messages.history,
-  }));
+  const { disabledInput, history, apiPath, errorMessage } = useSelector(
+    (state) => ({
+      disabledInput: state.behavior.disabledInput,
+      history: state.messages.history,
+      apiPath: state.config.apiPath,
+      errorMessage: state.config.errorMessage,
+    })
+  );
   const showChat = useSelector((state) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const refContainer = useRef<HTMLDivElement>(null);
@@ -74,7 +78,7 @@ export default function Footer() {
     dispatch(toggleMsgLoader());
 
     try {
-      const response = await fetch("http://localhost:5000/chat", {
+      const response = await fetch(`${apiPath}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,11 +104,7 @@ export default function Footer() {
         throw new Error();
       }
     } catch (error) {
-      dispatch(
-        addResponseMessage(
-          "Une erreur est survenue. Merci de réessayer plus tard."
-        )
-      );
+      dispatch(addResponseMessage(errorMessage));
       dispatch(toggleMsgLoader());
     }
   };

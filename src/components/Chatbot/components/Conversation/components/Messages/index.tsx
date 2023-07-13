@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import format from "date-fns/format";
 import { MessageTypes } from "../../../../../../store/types";
 import { MESSAGE_SENDER } from "../../../../../../constants";
 import Loader from "./components/Loader";
@@ -51,7 +50,7 @@ function Messages() {
           className={`asana-chat-message ${
             isClient(message.sender) ? "asana-chat-message-client" : ""
           }`}
-          key={`${index}-${format(message.timestamp, "hh:mm")}`}
+          key={index}
         >
           {!isClient(message.sender) && message.showAvatar && (
             <img src={logo} className={"asana-chat-avatar"} alt="profile" />

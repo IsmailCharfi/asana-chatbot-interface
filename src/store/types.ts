@@ -32,3 +32,15 @@ export interface MessagesState {
   messages: MessageTypes[];
   badgeCount: number;
 }
+
+export interface ConfigState {
+  apiPath: string;
+  primaryColor: string;
+  secondaryColor: string;
+  primaryTextColor: string;
+  secondatyTextColor: string;
+  botName: string;
+  botIcon: string;
+  startMessage: string;
+  errorMessage: string;
+}

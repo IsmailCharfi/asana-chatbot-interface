@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { DialogModal, useModal } from "react-dialog-confirm";
-import { useDispatch } from "../../../../../../store";
+import { useDispatch, useSelector } from "../../../../../../store";
 import { resetChat, toggleChat } from "../../../../../../store/slices/behavior";
-import robot from "./assets/robot.png";
 import close from "./assets/close.svg";
 import reset from "./assets/reset.svg";
 import "./styles.scss";
@@ -10,6 +8,7 @@ import "./styles.scss";
 function Header() {
   const dispatch = useDispatch();
   const { openModal, closeModal } = useModal();
+  const { botName, botIcon } = useSelector((state) => state.config);
   const resetChatBox = () => {
     dispatch(resetChat());
     closeModal();
@@ -20,8 +19,8 @@ function Header() {
   return (
     <div className="asana-chat-header">
       <h4 className="asana-chat-title">
-        <img src={robot} className="asana-chat-avatar" alt="Asana bot" />
-        Assistant Asana
+        <img src={botIcon} className="asana-chat-avatar" alt="Asana bot" />
+        {botName}
       </h4>
       <div className="asana-chat-actions">
         <img
@@ -33,9 +32,7 @@ function Header() {
               <DialogModal
                 titleStyle={{ fontFamily: "Lato, sans-serif" }}
                 icon={"warning"}
-                title={
-                  "Êtes-vous sûr.es de vouloir réinitialiser l'assistant asana"
-                }
+                title={`Êtes-vous sûr.es de vouloir réinitialiser ${botName}`}
                 confirm={"Oui"}
                 cancel={"Non"}
                 onConfirm={resetChatBox}

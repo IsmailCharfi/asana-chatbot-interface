@@ -9,10 +9,12 @@ import type { AnyAction } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
 import { reducer as behaviorReducer } from "./slices/behavior";
 import { reducer as messagesReducer } from "./slices/messages";
+import { reducer as configReducer } from "./slices/config";
 
 const rootReducer = combineReducers({
   behavior: behaviorReducer,
   messages: messagesReducer,
+  config: configReducer,
 });
 
 const store = configureStore({

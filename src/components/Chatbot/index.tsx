@@ -5,21 +5,25 @@ import "./style.scss";
 import { useDispatch, useSelector } from "../../store";
 import { CSSTransition } from "react-transition-group";
 import { useEffect } from "react";
-import { addResponseMessage, clearHistory, dropMessages } from "../../store/slices/messages";
+import {
+  addResponseMessage,
+  clearHistory,
+  dropMessages,
+} from "../../store/slices/messages";
 
 export default function AsanaChatbot() {
-  const { showChat, reset } = useSelector((state) => state.behavior);
+  const { showChat, reset, startMessage } = useSelector((state) => ({
+    showChat: state.behavior.showChat,
+    reset: state.behavior.reset,
+    startMessage: state.config.startMessage,
+  }));
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(dropMessages());
     dispatch(clearHistory());
-    dispatch(
-      addResponseMessage(
-        "Bonjour! je suis votre assistant Asana n'hésitez pas à me poser des questions!"
-      )
-    );
-  }, [reset, dispatch]);
+    dispatch(addResponseMessage(startMessage));
+  }, [reset, dispatch, startMessage]);
 
   return (
     <div

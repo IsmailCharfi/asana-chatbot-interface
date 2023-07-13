@@ -31,13 +31,13 @@ function Launcher() {
         <img
           src={launcher_close}
           className="asana-chat-close-launcher"
-          alt={"Fermer le chatbot asana"}
+          alt={"Close"}
         />
       ) : (
         <img
           src={launcher_open}
           className="asana-chat-open-launcher"
-          alt={"Ouvrir le chatbot asana"}
+          alt={"Open"}
         />
       )}
     </button>
