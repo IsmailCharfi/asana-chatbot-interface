@@ -33,7 +33,7 @@ export interface MessagesState {
   badgeCount: number;
 }
 
-export interface ConfigState {
+export interface Config {
   apiPath: string | null;
   primaryColor: string;
   secondaryColor: string;
@@ -71,4 +71,8 @@ export interface ConfigState {
   onSendMessage: (message: string, history: MessageHistory[]) => any;
   onReceiveMessage: (message: string) => any;
   onWaiting: (clientMessage: string) => any;
+}
+
+export interface ConfigState {
+  config: Config;
 }

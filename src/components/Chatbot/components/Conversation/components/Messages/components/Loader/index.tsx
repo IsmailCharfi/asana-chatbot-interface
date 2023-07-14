@@ -2,7 +2,7 @@ import { useSelector } from "../../../../../../../../store";
 import "./styles.scss";
 
 function Loader() {
-  const { botIcon } = useSelector((state) => state.config);
+  const { botIcon } = useSelector((state) => state.config.config);
   return (
     <>
       <div className={"asana-chat-message"}>

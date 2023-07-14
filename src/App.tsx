@@ -2,11 +2,11 @@ import { Provider } from "react-redux";
 import { DialogProvider } from "react-dialog-confirm";
 import store from "./store";
 import AsanaChatbot from "./components/Chatbot";
-import { ConfigState } from "./store/types";
+import { Config } from "./store/types";
 import { HelmetProvider } from "react-helmet-async";
 
 type AppProps = {
-  config: Partial<ConfigState>;
+  config: Partial<Config>;
 };
 
 export default function App(props: AppProps) {

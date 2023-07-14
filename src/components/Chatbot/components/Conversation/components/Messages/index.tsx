@@ -20,8 +20,8 @@ function Messages() {
       badgeCount: state.messages.badgeCount,
       typing: state.behavior.messageLoader,
       showChat: state.behavior.showChat,
-      botIcon: state.config.botIcon,
-      backgroundImage: state.config.backgroundImage,
+      botIcon: state.config.config.botIcon,
+      backgroundImage: state.config.config.backgroundImage,
     }));
 
   useEffect(() => {

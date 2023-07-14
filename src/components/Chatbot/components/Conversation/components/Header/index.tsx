@@ -18,7 +18,7 @@ function Header() {
     showConfirm,
     showReset,
     fontFamily,
-  } = useSelector((state) => state.config);
+  } = useSelector((state) => state.config.config);
 
   const resetChatBox = () => {
     dispatch(resetChat());

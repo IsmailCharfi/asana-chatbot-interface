@@ -17,10 +17,10 @@ function Launcher() {
   } = useSelector((state) => ({
     badgeCount: state.messages.badgeCount,
     showChat: state.behavior.showChat,
-    openLauncherIcon: state.config.openLauncherIcon,
-    closeLauncherIcon: state.config.closeLauncherIcon,
-    onLauncherOpen: state.config.onLauncherOpen,
-    onLauncherClose: state.config.onLauncherClose,
+    openLauncherIcon: state.config.config.openLauncherIcon,
+    closeLauncherIcon: state.config.config.closeLauncherIcon,
+    onLauncherOpen: state.config.config.onLauncherOpen,
+    onLauncherClose: state.config.config.onLauncherClose,
   }));
 
   const toggle = () => {

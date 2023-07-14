@@ -10,6 +10,7 @@
     "@types/sanitize-html": "^2.9.0",
     "classnames": "^2.2.6",
     "emoji-mart": "^3.0.1",
+    "nodemon": "^3.0.1",
     "react": "^17.0.2",
     "react-dialog-confirm": "^1.0.3",
     "react-dom": "^17.0.2",
@@ -25,7 +26,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "http-server ./demo"
+    "start": "sh ./bin/start-server.sh || .\\bin\\start-server.sh",
+    "build": "sh ./bin/build.sh || .\\bin\\build.sh",
+    "build-run": "sh ./bin/build-run.sh || .\\bin\\build-run.sh"
   },
   "eslintConfig": {
     "extends": [

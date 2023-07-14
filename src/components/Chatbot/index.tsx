@@ -10,21 +10,21 @@ import {
   clearHistory,
   dropMessages,
 } from "../../store/slices/messages";
-import { ConfigState } from "../../store/types";
+import { Config } from "../../store/types";
 import { setConfig } from "../../store/slices/config";
 import { Helmet } from "react-helmet-async";
 
 type AsanaChatbotProps = {
-  config: Partial<ConfigState>;
+  config: Partial<Config>;
 };
 
 export default function AsanaChatbot(props: AsanaChatbotProps) {
-  const { showChat, reset, startMessage } = useSelector((state) => ({
+  const { showChat, reset, startMessage, config } = useSelector((state) => ({
     showChat: state.behavior.showChat,
     reset: state.behavior.reset,
-    startMessage: state.config.startMessage,
+    startMessage: state.config.config.startMessage,
+    config: state.config.config,
   }));
-  const config = useSelector((state) => state.config);
   const dispatch = useDispatch();
 
   useEffect(() => {
