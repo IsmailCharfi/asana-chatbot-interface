@@ -1,13 +1,13 @@
 import { ElementType } from "react";
 
 type BaseMessage = {
+  id: string;
   type: string;
   component: ElementType;
   sender: string;
   showAvatar: boolean;
   timestamp: Date;
   unread: boolean;
-  customId?: string;
   props?: any;
 };
 
@@ -19,7 +19,6 @@ export interface BehaviorState {
   showChat: boolean;
   disabledInput: boolean;
   messageLoader: boolean;
-  reset: boolean;
 }
 
 export interface MessageHistory {
@@ -31,6 +30,7 @@ export interface MessagesState {
   history: MessageHistory[];
   messages: MessageTypes[];
   badgeCount: number;
+  lastMessage: string;
 }
 
 export interface Config {
@@ -42,20 +42,17 @@ export interface Config {
   badgeColor: string;
   badgeTextColor: string;
   fontFamily: string;
-  botName: string;
-  botIcon: string;
+  headerText: string;
+  headerIcon: string;
+  avatar: string;
   backgroundImage: string;
   width: string;
-  startMessage: string;
+  firstMessage: string;
   errorMessage: string;
-  openLauncherIcon: string;
-  closeLauncherIcon: string;
+  openIcon: string;
   closeIcon: string;
-  resetIcon: string;
-  confirmText: string;
-  showConfirm: boolean;
   showEmoji: boolean;
-  showReset: boolean;
+  showPreview: boolean;
   sendMessageApiCall:
     | ((
         prompt: string,
@@ -63,10 +60,8 @@ export interface Config {
         messages: MessageTypes[]
       ) => Promise<{ text: string }>)
     | null;
-  onLauncherOpen: () => any;
-  onLauncherClose: () => any;
-  onReset: () => any;
-  afterReset: () => any;
+  onOpen: () => any;
+  onClose: () => any;
   onOpenEmoji: () => any;
   onSendMessage: (message: string, history: MessageHistory[]) => any;
   onReceiveMessage: (message: string) => any;

@@ -9,6 +9,7 @@ import {
   addResponseMessage,
   clearHistory,
   dropMessages,
+  setLastMessage,
 } from "../../store/slices/messages";
 import { Config } from "../../store/types";
 import { setConfig } from "../../store/slices/config";
@@ -19,10 +20,9 @@ type AsanaChatbotProps = {
 };
 
 export default function AsanaChatbot(props: AsanaChatbotProps) {
-  const { showChat, reset, startMessage, config } = useSelector((state) => ({
+  const { showChat, firstMessage, config } = useSelector((state) => ({
     showChat: state.behavior.showChat,
-    reset: state.behavior.reset,
-    startMessage: state.config.config.startMessage,
+    firstMessage: state.config.config.firstMessage,
     config: state.config.config,
   }));
   const dispatch = useDispatch();
@@ -30,8 +30,9 @@ export default function AsanaChatbot(props: AsanaChatbotProps) {
   useEffect(() => {
     dispatch(dropMessages());
     dispatch(clearHistory());
-    dispatch(addResponseMessage(startMessage));
-  }, [reset, dispatch, startMessage]);
+    dispatch(addResponseMessage(firstMessage, false));
+    dispatch(setLastMessage(firstMessage));
+  }, [dispatch, firstMessage]);
 
   useEffect(() => {
     dispatch(setConfig(props.config));

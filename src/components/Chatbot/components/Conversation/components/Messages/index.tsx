@@ -8,24 +8,25 @@ import { useDispatch, useSelector } from "../../../../../../store";
 import {
   markAllMessagesRead,
   setBadgeCount,
+  setLastMessage,
 } from "../../../../../../store/slices/messages";
 import { CSSTransition } from "react-transition-group";
 
 function Messages() {
   const dispatch = useDispatch();
   const messageRef = useRef<HTMLDivElement | null>(null);
-  const { messages, typing, showChat, badgeCount, botIcon, backgroundImage } =
+  const { messages, typing, showChat, badgeCount, avatar, backgroundImage } =
     useSelector((state) => ({
       messages: state.messages.messages,
       badgeCount: state.messages.badgeCount,
       typing: state.behavior.messageLoader,
       showChat: state.behavior.showChat,
-      botIcon: state.config.config.botIcon,
+      avatar: state.config.config.avatar,
       backgroundImage: state.config.config.backgroundImage,
     }));
 
   useEffect(() => {
-    if (messageRef.current) {
+    if (messageRef.current && backgroundImage) {
       messageRef.current.style.backgroundImage = `url(${backgroundImage})`;
     }
   }, [messageRef, backgroundImage]);
@@ -34,10 +35,11 @@ function Messages() {
     scrollToBottom(messageRef.current);
     if (showChat && badgeCount) {
       dispatch(markAllMessagesRead());
-    } else
+    } else {
       dispatch(
         setBadgeCount(messages.filter((message) => message.unread).length)
       );
+    }
   }, [messages, badgeCount, showChat, dispatch]);
 
   const getComponentToRender = (message: MessageTypes) => {
@@ -61,7 +63,7 @@ function Messages() {
           key={index}
         >
           {!isClient(message.sender) && message.showAvatar && (
-            <img src={botIcon} className={"asana-chat-avatar"} alt="Bot" />
+            <img src={avatar} className={"asana-chat-avatar"} alt="Bot" />
           )}
           {getComponentToRender(message)}
         </div>

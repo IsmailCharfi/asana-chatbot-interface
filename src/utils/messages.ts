@@ -1,4 +1,6 @@
 import Message from "../components/Chatbot/components/Conversation/components/Messages/components/Message";
+import { v4 as uuidv4 } from "uuid";
+
 import {
   MESSAGES_TYPES,
   MESSAGE_SENDER,
@@ -9,7 +11,7 @@ import { MessageTypes as MessageI } from "../store/types";
 export function createNewMessage(
   text: string,
   sender: string,
-  id?: string
+  unread: boolean | null = null
 ): MessageI {
   return {
     type: MESSAGES_TYPES.TEXT,
@@ -18,8 +20,8 @@ export function createNewMessage(
     sender,
     timestamp: new Date(),
     showAvatar: true,
-    customId: id,
-    unread: sender === MESSAGE_SENDER.RESPONSE,
+    id: uuidv4(),
+    unread: unread != null ? unread : sender === MESSAGE_SENDER.RESPONSE,
   };
 }
 

@@ -7,7 +7,6 @@ const initialState: BehaviorState = {
   showChat: false,
   disabledInput: false,
   messageLoader: false,
-  reset: false
 };
 
 const slice = createSlice({
@@ -22,11 +21,6 @@ const slice = createSlice({
     },
     toggleMessageLoader(state: BehaviorState, action: PayloadAction) {
       state.messageLoader = !state.messageLoader;
-    },
-    resetChat(state: BehaviorState, action: PayloadAction) {
-      state.reset = !state.reset;
-      state.disabledInput = false;
-      state.messageLoader = false;
     },
   },
 });
@@ -43,10 +37,6 @@ export const toggleInputDisabled = (): AppThunk => async (dispatch) => {
 
 export const toggleMsgLoader = (): AppThunk => async (dispatch) => {
   dispatch(slice.actions.toggleMessageLoader());
-};
-
-export const resetChat = (): AppThunk => async (dispatch) => {
-  dispatch(slice.actions.resetChat());
 };
 
 

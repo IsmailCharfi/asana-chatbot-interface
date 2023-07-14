@@ -3,58 +3,90 @@ import Badge from "./components/Badge";
 import "./styles.scss";
 import { useDispatch, useSelector } from "../../../../store";
 import { toggleChat } from "../../../../store/slices/behavior";
-import { setBadgeCount } from "../../../../store/slices/messages";
+import {
+  setBadgeCount,
+  setLastMessage,
+} from "../../../../store/slices/messages";
+import { CSSTransition } from "react-transition-group";
 
 function Launcher() {
   const dispatch = useDispatch();
   const {
     badgeCount,
     showChat,
-    openLauncherIcon,
-    closeLauncherIcon,
-    onLauncherClose,
-    onLauncherOpen,
+    openIcon,
+    closeIcon,
+    onOpen,
+    onClose,
+    showPreview,
+    lastMessage,
+    firstMessage,
   } = useSelector((state) => ({
     badgeCount: state.messages.badgeCount,
     showChat: state.behavior.showChat,
-    openLauncherIcon: state.config.config.openLauncherIcon,
-    closeLauncherIcon: state.config.config.closeLauncherIcon,
-    onLauncherOpen: state.config.config.onLauncherOpen,
-    onLauncherClose: state.config.config.onLauncherClose,
+    openIcon: state.config.config.openIcon,
+    closeIcon: state.config.config.closeIcon,
+    onOpen: state.config.config.onOpen,
+    onClose: state.config.config.onClose,
+    firstMessage: state.config.config.firstMessage,
+    showPreview: state.config.config.showPreview,
+    lastMessage: state.messages.lastMessage,
   }));
 
   const toggle = () => {
     dispatch(toggleChat());
     if (!showChat) {
-      onLauncherOpen();
+      onOpen();
       dispatch(setBadgeCount(0));
+      dispatch(setLastMessage(""));
     } else {
-      onLauncherClose();
+      onClose();
     }
   };
 
+  function truncateString(string: string, limit: number) {
+    if (string.length > limit) {
+      return string.substring(0, limit) + "...";
+    }
+    return string;
+  }
+
   return (
-    <button
-      type="button"
-      className={cn("asana-chat-launcher", { "asana-chat-hide-sm": showChat })}
-      onClick={toggle}
-      aria-controls={"chatId"}
-    >
-      {!showChat && <Badge badge={badgeCount} />}
-      {showChat ? (
-        <img
-          src={closeLauncherIcon}
-          className="asana-chat-close-launcher"
-          alt={"Close"}
-        />
-      ) : (
-        <img
-          src={openLauncherIcon}
-          className="asana-chat-open-launcher"
-          alt={"Open"}
-        />
-      )}
-    </button>
+    <>
+      <button
+        type="button"
+        className={cn("asana-chat-launcher", {
+          "asana-chat-hide-sm": showChat,
+        })}
+        onClick={toggle}
+        aria-controls={"chatId"}
+      >
+        {!showChat && <Badge badge={badgeCount} />}
+        {showChat ? (
+          <img
+            src={closeIcon}
+            className="asana-chat-close-launcher"
+            alt={"Close"}
+          />
+        ) : (
+          <img
+            src={openIcon}
+            className="asana-chat-open-launcher"
+            alt={"Open"}
+          />
+        )}
+      </button>
+      <CSSTransition
+        in={showPreview && !showChat && badgeCount > 0}
+        timeout={300}
+        classNames="asana-chat-tooltip"
+        unmountOnExit
+      >
+        <span className="asana-chat-tooltip" onClick={toggle}>
+          {truncateString(lastMessage, firstMessage.length)}
+        </span>
+      </CSSTransition>
+    </>
   );
 }
 

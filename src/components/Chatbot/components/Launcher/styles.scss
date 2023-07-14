@@ -1,4 +1,4 @@
-@import '../../../../scss/animation';
+@import "../../../../scss/animation";
 
 .asana-chat-launcher {
   @include animation(0, 0.5s, slide-in);
@@ -24,4 +24,53 @@
 .asana-chat-close-launcher {
   width: 20px;
   @include animation(0, 0.5s, rotation-lr);
+}
+
+
+.asana-chat-tooltip {
+  cursor: pointer;
+  opacity: 1;
+  display: block;
+  position: absolute;
+  width: 200px;
+  right: 70px;
+  bottom: 0;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid rgba(165, 164, 164, 0.9);
+  box-shadow: 0 0 3px var(--asana-chat-shadow);
+}
+
+.asana-chat-tooltip:after {
+  content: "";
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid white;
+  position: absolute;
+  bottom: 15px;
+  right: -10px;
+}
+
+.asana-chat-tooltip:before {
+  right: 1px;
+}
+
+.asana-chat-tooltip-enter {
+  opacity: 0;
+}
+
+.asana-chat-tooltip-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.asana-chat-tooltip-exit {
+  opacity: 1;
+}
+
+.asana-chat-tooltip-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 }

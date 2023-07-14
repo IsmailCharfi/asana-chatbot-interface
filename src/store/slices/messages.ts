@@ -9,6 +9,7 @@ const initialState: MessagesState = {
   history: [],
   messages: [],
   badgeCount: 0,
+  lastMessage: "",
 };
 
 const slice = createSlice({
@@ -17,48 +18,29 @@ const slice = createSlice({
   reducers: {
     addUserMessage(
       state: MessagesState,
-      action: PayloadAction<{ text: string; id?: string }>
+      action: PayloadAction<{ text: string }>
     ) {
       state.messages = [
         ...state.messages,
-        createNewMessage(
-          action.payload.text,
-          MESSAGE_SENDER.CLIENT,
-          action.payload.id
-        ),
+        createNewMessage(action.payload.text, MESSAGE_SENDER.CLIENT),
       ];
     },
     addResponseMessage(
       state: MessagesState,
-      action: PayloadAction<{ text: string; id?: string }>
+      action: PayloadAction<{ text: string; unread: boolean | null }>
     ) {
       state.messages = [
         ...state.messages,
         createNewMessage(
           action.payload.text,
           MESSAGE_SENDER.RESPONSE,
-          action.payload.id
+          action.payload.unread
         ),
       ];
       state.badgeCount++;
     },
     dropMessages(state: MessagesState, action: PayloadAction) {
       state.messages = [];
-    },
-    deleteMessages(
-      state: MessagesState,
-      action: PayloadAction<{ count: number; id?: string }>
-    ) {
-      state.messages = action.payload.id
-        ? state.messages.filter((_, index) => {
-            const targetMsg = state.messages.findIndex(
-              (tMsg) => tMsg.customId === action.payload.id
-            );
-            return (
-              index < targetMsg - action.payload.count + 1 || index > targetMsg
-            );
-          })
-        : state.messages.slice(0, state.messages.length - action.payload.count);
     },
     markAllMessagesRead(state: MessagesState, action: PayloadAction) {
       state.messages = state.messages.map((message) => ({
@@ -72,6 +54,12 @@ const slice = createSlice({
       action: PayloadAction<{ count: number }>
     ) {
       state.badgeCount = action.payload.count;
+    },
+    setLastMessage(
+      state: MessagesState,
+      action: PayloadAction<{ message: string }>
+    ) {
+      state.lastMessage = action.payload.message;
     },
     pushHistory(
       state: MessagesState,
@@ -96,26 +84,20 @@ const slice = createSlice({
 export const reducer = slice.reducer;
 
 export const addUserMessage =
-  (text: string, id?: string): AppThunk =>
+  (text: string): AppThunk =>
   async (dispatch) => {
-    dispatch(slice.actions.addUserMessage({ text, id }));
+    dispatch(slice.actions.addUserMessage({ text }));
   };
 
 export const addResponseMessage =
-  (text: string, id?: string): AppThunk =>
+  (text: string, unread: boolean | null = null): AppThunk =>
   async (dispatch) => {
-    dispatch(slice.actions.addResponseMessage({ text, id }));
+    dispatch(slice.actions.addResponseMessage({ text, unread }));
   };
 
 export const dropMessages = (): AppThunk => async (dispatch) => {
   dispatch(slice.actions.dropMessages());
 };
-
-export const deleteMessages =
-  (count: number, id?: string): AppThunk =>
-  async (dispatch) => {
-    dispatch(slice.actions.deleteMessages({ count, id }));
-  };
 
 export const markAllMessagesRead = (): AppThunk => async (dispatch) => {
   dispatch(slice.actions.markAllMessagesRead());
@@ -125,6 +107,12 @@ export const setBadgeCount =
   (count: number): AppThunk =>
   async (dispatch) => {
     dispatch(slice.actions.setBadgeCount({ count }));
+  };
+
+export const setLastMessage =
+  (message: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(slice.actions.setLastMessage({ message }));
   };
 
 export const pushHistory =
