@@ -8,8 +8,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'Chatbot.js',
-    library: 'Chatbot',
+    filename: 'AsanaChatbot.js',
+    library: 'AsanaChatbot',
     libraryTarget: 'umd',
     globalObject: 'this',
     libraryExport: 'default'

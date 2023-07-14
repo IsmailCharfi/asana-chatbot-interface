@@ -3,26 +3,25 @@ import App from "./App";
 import { Config } from "./store/types";
 import BotException from "./utils/BotException";
 
-export default function Chatbot(
-  config: Config,
-  elementOrSelector: HTMLElement | string
+export default function AsanaChatbot(
+  options: Config & { element: HTMLElement | string }
 ) {
-  let element: HTMLElement | null;
+  let htmlElement: HTMLElement | null;
 
-  if (typeof elementOrSelector == "string") {
-    element = document.querySelector(elementOrSelector);
-    if (!element) {
+  if (!options.element) {
+    throw new BotException("The element option is required");
+  }
+
+  if (typeof options.element == "string") {
+    htmlElement = document.querySelector(options.element);
+    if (!htmlElement) {
       throw new BotException(
-        `The element with the selector "${elementOrSelector}" can't be found `
+        `The element with the selector "${options.element}" can't be found `
       );
     }
   } else {
-    element = elementOrSelector;
-
-    if (!element) {
-      throw new BotException("The element provided does not exist");
-    }
+    htmlElement = options.element;
   }
 
-  ReactDOM.render(<App config={config} />, element);
+  ReactDOM.render(<App config={options} />, htmlElement);
 }
