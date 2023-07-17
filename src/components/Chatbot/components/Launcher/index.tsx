@@ -8,6 +8,7 @@ import {
   setLastMessage,
 } from "../../../../store/slices/messages";
 import { CSSTransition } from "react-transition-group";
+import sanitizeHtml from "sanitize-html";
 
 function Launcher() {
   const dispatch = useDispatch();
@@ -45,10 +46,12 @@ function Launcher() {
   };
 
   function truncateString(string: string, limit: number) {
-    if (string.length > limit) {
-      return string.substring(0, limit) + "...";
+    const sanitizedHTML = sanitizeHtml(string);
+
+    if (sanitizedHTML.length > limit) {
+      return sanitizedHTML.substring(0, limit) + "...";
     }
-    return string;
+    return sanitizedHTML;
   }
 
   return (
@@ -82,9 +85,16 @@ function Launcher() {
         classNames="asana-chat-tooltip"
         unmountOnExit
       >
-        <span className="asana-chat-tooltip" onClick={toggle}>
-          {truncateString(lastMessage, firstMessage.length)}
-        </span>
+        <span
+          className="asana-chat-tooltip"
+          onClick={toggle}
+          dangerouslySetInnerHTML={{
+            __html: truncateString(lastMessage, firstMessage.length).replace(
+              /\n$/,
+              ""
+            ),
+          }}
+        />
       </CSSTransition>
     </>
   );
