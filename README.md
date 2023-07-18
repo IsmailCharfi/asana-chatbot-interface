@@ -91,7 +91,7 @@ To run the demo locally and make changes to the module:
 1. To run the local static server:
 
 ```
-npm run build
+npm start
 ```
 
 2. to build the app; The built module will be located in the `dist/` directory.
