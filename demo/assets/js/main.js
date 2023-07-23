@@ -10,6 +10,6 @@ window.addEventListener("load", () => {
 AsanaChatbot({
   element: "#chatbot",
   backgroundImage: null,
-  apiPath: "https://asana-chatbot-api.onrender.com/chat",
+  apiPath: "http://localhost:5000/chat",
   width: "30vw",
 });

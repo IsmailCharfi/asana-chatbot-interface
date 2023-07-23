@@ -28,7 +28,7 @@ const initialState: ConfigState = {
     errorMessage: "Une erreur est survenue. Merci de réessayer plus tard.",
     firstMessage:
       "Bonjour! je suis votre assistant Asana n'hésitez pas à me poser des questions!",
-    showEmoji: false,
+    showEmoji: true,
     showPreview: true,
     sendMessageApiCall: null,
     onOpen: () => {},

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-npm start demo &
-nodemon --watch ./src --ext tsx,ts,scss --exec "npm run build"
+npm start &
+nodemon --watch ./src --ext tsx,ts,scss --exec "npm run dev-build"

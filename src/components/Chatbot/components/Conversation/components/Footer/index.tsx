@@ -95,7 +95,7 @@ export default function Footer() {
       if (
         pickerRef.current &&
         pickerIconRef.current &&
-        (!pickerRef.current.contains(event.target as Node) ||
+        (!pickerRef.current.contains(event.target as Node) &&
           !pickerIconRef.current.contains(event.target as Node))
       ) {
         setPicker(false);
