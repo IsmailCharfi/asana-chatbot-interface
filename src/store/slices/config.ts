@@ -38,6 +38,7 @@ const initialState: ConfigState = {
     onReceiveMessage: (message: string) => {},
     onWaiting: (clientMessage: string) => {},
   },
+  initialWidth: "30vw",
 };
 
 const slice = createSlice({
@@ -53,6 +54,9 @@ const slice = createSlice({
         ...action.payload.config,
       };
     },
+    setOldWidth(state: ConfigState, action: PayloadAction<{ initialWidth: string }>) {
+      state.initialWidth = action.payload.initialWidth;
+    },
   },
 });
 
@@ -62,6 +66,12 @@ export const setConfig =
   (config: Partial<Config>): AppThunk =>
   async (dispatch) => {
     dispatch(slice.actions.setConfig({ config }));
+  };
+
+export const setInitialWidth =
+  (initialWidth: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(slice.actions.setOldWidth({ initialWidth }));
   };
 
 export default slice;

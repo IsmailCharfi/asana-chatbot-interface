@@ -1,45 +1,23 @@
-import html2canvas from "html2canvas";
 import { useDispatch, useSelector } from "../../../../../../store";
 import "./styles.scss";
 import { setConfig } from "../../../../../../store/slices/config";
-import { useState } from "react";
 import { saveAs } from "file-saver";
 import { MESSAGE_SENDER } from "../../../../../../constants";
 
 function Header() {
-  const { headerText, headerIcon, width, messages, primaryTextColor } =
-    useSelector((state) => ({
-      ...state.config.config,
-      messages: state.messages.messages,
-    }));
-  const [oldWidth, setOldWidth] = useState<string | null>(null);
+  const {
+    headerText,
+    headerIcon,
+    width,
+    messages,
+    primaryTextColor,
+    initialWidth,
+  } = useSelector((state) => ({
+    ...state.config.config,
+    initialWidth: state.config.initialWidth,
+    messages: state.messages.messages,
+  }));
   const dispatch = useDispatch();
-
-  async function downloadConversation() {
-    const conversation = document.getElementById("messages")!;
-    const conversationHeight = conversation.scrollHeight;
-    const chunkHeight = conversation.offsetHeight;
-    const chunkWidth = 1.25 * conversation.offsetWidth;
-    const chunks = Math.ceil(conversationHeight / chunkHeight);
-
-    const canvas = document.createElement("canvas");
-    canvas.width = chunkWidth;
-    canvas.height = conversationHeight;
-
-    const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < chunks; i++) {
-      conversation.scrollTo(0, i * chunkHeight);
-      await new Promise((r) => setTimeout(r, 800));
-
-      const el = await html2canvas(conversation);
-      ctx.drawImage(el, 0, i * chunkHeight);
-    }
-
-    saveAs(canvas.toDataURL("image/png"), "conversation.png");
-  }
 
   const downlaodText = () => {
     let textFileContent = "";
@@ -57,12 +35,10 @@ function Header() {
   };
 
   const changeWidth = () => {
-    if (!oldWidth) {
-      setOldWidth(width);
+    if (initialWidth == width) {
       dispatch(setConfig({ width: "90vw" }));
     } else {
-      dispatch(setConfig({ width: oldWidth }));
-      setOldWidth(null);
+      dispatch(setConfig({ width: initialWidth }));
     }
   };
 
@@ -93,17 +69,17 @@ function Header() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_111_43)">
+      <g clipPath="url(#clip0_111_43)">
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M6.94617 9.27459C7.22819 8.90846 7.6855 8.90846 7.96754 9.27459L13.0231 15.8371C13.3051 16.2032 13.3051 16.7968 13.0231 17.1629L7.96754 23.7254C7.6855 24.0915 7.22819 24.0915 6.94617 23.7254C6.66413 23.3593 6.66413 22.7657 6.94617 22.3996L10.7688 17.4375H0.956849C0.55797 17.4375 0.234621 17.0178 0.234621 16.5C0.234621 15.9822 0.55797 15.5625 0.956849 15.5625L10.7688 15.5625L6.94617 10.6004C6.66413 10.2343 6.66413 9.64071 6.94617 9.27459Z"
           fill={primaryTextColor}
         />
       </g>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M25.2885 23.7254C25.0064 24.0915 24.5491 24.0915 24.2671 23.7254L19.2115 17.1629C18.9295 16.7968 18.9295 16.2032 19.2115 15.8371L24.2671 9.27457C24.5491 8.90848 25.0064 8.90848 25.2885 9.27457C25.5705 9.64067 25.5705 10.2343 25.2885 10.6004L21.4658 15.5625L31.2778 15.5625C31.6766 15.5625 32 15.9822 32 16.5C32 17.0178 31.6766 17.4375 31.2778 17.4375H21.4658L25.2885 22.3996C25.5705 22.7657 25.5705 23.3593 25.2885 23.7254Z"
         fill={primaryTextColor}
       />
@@ -128,17 +104,17 @@ function Header() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_111_45)">
+      <g clipPath="url(#clip0_111_45)">
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M6.52307 23.7254C6.24105 24.0915 5.78373 24.0915 5.5017 23.7254L0.44614 17.1629C0.164112 16.7968 0.164112 16.2032 0.44614 15.8371L5.5017 9.27457C5.78373 8.90848 6.24105 8.90848 6.52307 9.27457C6.8051 9.64066 6.8051 10.2343 6.52307 10.6004L2.70042 15.5625H12.5124C12.9113 15.5625 13.2346 15.9822 13.2346 16.5C13.2346 17.0178 12.9113 17.4375 12.5124 17.4375H2.70042L6.52307 22.3996C6.8051 22.7657 6.8051 23.3593 6.52307 23.7254Z"
           fill={primaryTextColor}
         />
       </g>
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M25.7115 9.27458C25.9936 8.90847 26.4509 8.90847 26.7329 9.27458L31.7885 15.8371C32.0705 16.2032 32.0705 16.7968 31.7885 17.1629L26.7329 23.7254C26.4509 24.0915 25.9936 24.0915 25.7115 23.7254C25.4295 23.3593 25.4295 22.7657 25.7115 22.3996L29.5342 17.4375H19.7222C19.3234 17.4375 19 17.0178 19 16.5C19 15.9822 19.3234 15.5625 19.7222 15.5625H29.5342L25.7115 10.6004C25.4295 10.2343 25.4295 9.64071 25.7115 9.27458Z"
         fill={primaryTextColor}
       />
@@ -163,22 +139,16 @@ function Header() {
       </h4>
 
       <div className="asana-chat-actions">
-        <div className="asana-chat-actions asana-chat-dropdown">
+        <div className="asana-chat-action" onClick={changeWidth}>
+          {width != initialWidth ? resizeInIcon : resizeOutIcon}
+        </div>
+        <div className="asana-chat-action asana-chat-dropdown">
           <div className="asana-chat-action">{downloadIcon}</div>
           <div className="asana-chat-dropdown-content">
-            <div
-              className="asana-chat-dropdown-item"
-              onClick={downloadConversation}
-            >
-              Image
-            </div>
             <div className="asana-chat-dropdown-item" onClick={downlaodText}>
               Text
             </div>
           </div>
-        </div>
-        <div className="asana-chat-action" onClick={changeWidth}>
-          {oldWidth ? resizeInIcon : resizeOutIcon}
         </div>
       </div>
     </div>

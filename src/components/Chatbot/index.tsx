@@ -12,7 +12,7 @@ import {
   setLastMessage,
 } from "../../store/slices/messages";
 import { Config } from "../../store/types";
-import { setConfig } from "../../store/slices/config";
+import { setConfig, setInitialWidth } from "../../store/slices/config";
 import { Helmet } from "react-helmet-async";
 
 type AsanaChatbotProps = {
@@ -36,6 +36,7 @@ export default function AsanaChatbot(props: AsanaChatbotProps) {
 
   useEffect(() => {
     dispatch(setConfig(props.config));
+    dispatch(setInitialWidth(props.config.width ?? config.width));
   }, [props.config]);
 
   useEffect(() => {
