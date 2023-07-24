@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "../../../../../../store";
 import {
   markAllMessagesRead,
   setBadgeCount,
-  setLastMessage,
 } from "../../../../../../store/slices/messages";
 import { CSSTransition } from "react-transition-group";
 

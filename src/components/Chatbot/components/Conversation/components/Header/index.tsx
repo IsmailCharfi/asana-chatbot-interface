@@ -34,6 +34,30 @@ function Header() {
     );
   };
 
+  const downlaodPDF = () => {
+    const divContents = document.getElementById("messages")!.outerHTML;
+    let styles = "";
+    Array.from(document.querySelectorAll("style[asana-chatbot]")).map(
+      (e) => (styles += e.outerHTML)
+    );
+    const printableContent = `<html><head>${styles}<style>.asana-chat-messages-container{height: 70000px; overflow-y: visible; max-height: null}</style></head><body>${divContents}</body></html>`;
+
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+
+    iframe.srcdoc = printableContent;
+
+    document.body.appendChild(iframe);
+
+    iframe.onload = function () {
+      iframe.contentWindow!.print();
+
+      setTimeout(function () {
+        document.body.removeChild(iframe);
+      }, 1000);
+    };
+  };
+
   const changeWidth = () => {
     if (initialWidth == width) {
       dispatch(setConfig({ width: "90vw" }));
@@ -145,6 +169,9 @@ function Header() {
         <div className="asana-chat-action asana-chat-dropdown">
           <div className="asana-chat-action">{downloadIcon}</div>
           <div className="asana-chat-dropdown-content">
+            <div className="asana-chat-dropdown-item" onClick={downlaodPDF}>
+              PDF
+            </div>
             <div className="asana-chat-dropdown-item" onClick={downlaodText}>
               Text
             </div>
