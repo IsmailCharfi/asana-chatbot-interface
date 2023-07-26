@@ -1,7 +1,7 @@
 @mixin message-bubble($color) {
   background-color: $color;
   border-radius: 10px;
-  max-width: 20vw;
+  max-width: 90vw;
   padding: 15px;
   text-align: left;
 }

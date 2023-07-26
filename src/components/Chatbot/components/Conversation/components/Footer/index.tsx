@@ -95,8 +95,8 @@ export default function Footer() {
       if (
         pickerRef.current &&
         pickerIconRef.current &&
-        (!pickerRef.current.contains(event.target as Node) &&
-          !pickerIconRef.current.contains(event.target as Node))
+        !pickerRef.current.contains(event.target as Node) &&
+        !pickerIconRef.current.contains(event.target as Node)
       ) {
         setPicker(false);
       }
@@ -123,7 +123,7 @@ export default function Footer() {
   const success = (userInput: string, response: string) => {
     dispatch(
       pushHistory({
-        client: userInput,
+        human: userInput,
         bot: response,
       })
     );
@@ -151,12 +151,14 @@ export default function Footer() {
           "You should provide either the apiPath or the callback function {sendMessageApiCall} to send the prompt to the API"
         );
       }
+      let token = window.localStorage.getItem("asana-chatbot-token");
 
       if (apiPath) {
         const response = await fetch(`${apiPath}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
           body: JSON.stringify({
             history,
@@ -165,16 +167,18 @@ export default function Footer() {
         });
         if (response.ok) {
           const data = await response.json();
+          window.localStorage.setItem("asana-chatbot-token", data.token)
           if (showPreview) {
-            dispatch(setLastMessage(data.text));
+            dispatch(setLastMessage(data.response));
           }
-          success(userInput, data.text);
+          success(userInput, data.response);
         } else {
           throw new Error();
         }
       } else if (sendMessageApiCall) {
-        const data = await sendMessageApiCall(userInput, history, messages);
-        success(userInput, data.text);
+        const data = await sendMessageApiCall(userInput, history, messages, token);
+        window.localStorage.setItem("asana-chatbot-token", data.token)
+        success(userInput, data.response);
       }
     } catch (error) {
       showError();

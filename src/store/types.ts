@@ -22,7 +22,7 @@ export interface BehaviorState {
 }
 
 export interface MessageHistory {
-  client: string;
+  human: string;
   bot: string;
 }
 
@@ -57,8 +57,9 @@ export interface Config {
     | ((
         prompt: string,
         history: MessageHistory[],
-        messages: MessageTypes[]
-      ) => Promise<{ text: string }>)
+        messages: MessageTypes[],
+        token: string | null
+      ) => Promise<{ response: string, token: string }>)
     | null;
   onOpen: () => any;
   onClose: () => any;
