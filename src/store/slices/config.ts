@@ -3,7 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AppThunk } from "../index";
 import { Config, ConfigState, MessageHistory } from "../types";
 
-const DEFAULT_CLOSE_ICON = "data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_112_5)'%3E%3Cpath d='M512 51.2L460.8 0L256 204.8L51.2 0L0 51.2L204.8 256L0 460.8L51.2 512L256 307.2L460.8 512L512 460.8L307.2 256L512 51.2Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_112_5'%3E%3Crect width='512' height='512' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A"
+const DEFAULT_CLOSE_ICON =
+  "data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_112_5)'%3E%3Cpath d='M512 51.2L460.8 0L256 204.8L51.2 0L0 51.2L204.8 256L0 460.8L51.2 512L256 307.2L460.8 512L512 460.8L307.2 256L512 51.2Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_112_5'%3E%3Crect width='512' height='512' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A";
 
 const initialState: ConfigState = {
   config: {
@@ -40,6 +41,7 @@ const initialState: ConfigState = {
     onWaiting: (clientMessage: string) => {},
   },
   initialWidth: "30vw",
+  token: null,
 };
 
 const slice = createSlice({
@@ -56,11 +58,20 @@ const slice = createSlice({
       };
 
       if (state.config.closeIcon == DEFAULT_CLOSE_ICON) {
-        state.config.closeIcon = DEFAULT_CLOSE_ICON.replace("white", encodeURIComponent(state.config.primaryTextColor))
+        state.config.closeIcon = DEFAULT_CLOSE_ICON.replace(
+          "white",
+          encodeURIComponent(state.config.primaryTextColor)
+        );
       }
     },
-    setOldWidth(state: ConfigState, action: PayloadAction<{ initialWidth: string }>) {
+    setOldWidth(
+      state: ConfigState,
+      action: PayloadAction<{ initialWidth: string }>
+    ) {
       state.initialWidth = action.payload.initialWidth;
+    },
+    setToken(state: ConfigState, action: PayloadAction<{ token: string }>) {
+      state.token = action.payload.token;
     },
   },
 });
@@ -77,6 +88,12 @@ export const setInitialWidth =
   (initialWidth: string): AppThunk =>
   async (dispatch) => {
     dispatch(slice.actions.setOldWidth({ initialWidth }));
+  };
+
+export const setToken =
+  (token: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(slice.actions.setToken({ token }));
   };
 
 export default slice;

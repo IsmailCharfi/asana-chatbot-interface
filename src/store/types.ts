@@ -72,4 +72,5 @@ export interface Config {
 export interface ConfigState {
   config: Config;
   initialWidth: string;
+  token: string | null;
 }

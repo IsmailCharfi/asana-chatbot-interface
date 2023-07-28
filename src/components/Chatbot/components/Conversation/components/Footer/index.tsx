@@ -21,6 +21,7 @@ import {
 } from "../../../../../../utils/contentEditable";
 import "./style.scss";
 import BotException from "../../../../../../utils/BotException";
+import { setToken } from "../../../../../../store/slices/config";
 const brRegex = /<br>/g;
 
 export interface ISenderRef {
@@ -47,6 +48,7 @@ export default function Footer() {
     sendMessageApiCall,
     messages,
     showPreview,
+    token
   } = useSelector((state) => ({
     messages: state.messages.messages,
     disabledInput: state.behavior.disabledInput,
@@ -60,6 +62,7 @@ export default function Footer() {
     onWaiting: state.config.config.onWaiting,
     sendMessageApiCall: state.config.config.sendMessageApiCall,
     showPreview: state.config.config.showPreview,
+    token: state.config.token
   }));
   const showChat = useSelector((state) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
@@ -151,7 +154,6 @@ export default function Footer() {
           "You should provide either the apiPath or the callback function {sendMessageApiCall} to send the prompt to the API"
         );
       }
-      let token = window.localStorage.getItem("asana-chatbot-token");
 
       if (apiPath) {
         const response = await fetch(`${apiPath}`, {
@@ -167,7 +169,7 @@ export default function Footer() {
         });
         if (response.ok) {
           const data = await response.json();
-          window.localStorage.setItem("asana-chatbot-token", data.token)
+          dispatch(setToken(data.token))
           if (showPreview) {
             dispatch(setLastMessage(data.response));
           }
@@ -177,7 +179,7 @@ export default function Footer() {
         }
       } else if (sendMessageApiCall) {
         const data = await sendMessageApiCall(userInput, history, messages, token);
-        window.localStorage.setItem("asana-chatbot-token", data.token)
+        dispatch(setToken(data.token))
         success(userInput, data.response);
       }
     } catch (error) {
