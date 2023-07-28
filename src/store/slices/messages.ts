@@ -41,6 +41,9 @@ const slice = createSlice({
     },
     dropMessages(state: MessagesState, action: PayloadAction) {
       state.messages = [];
+      state.badgeCount = 0;
+      state.lastMessage = "";
+      state.history = [];
     },
     markAllMessagesRead(state: MessagesState, action: PayloadAction) {
       state.messages = state.messages.map((message) => ({
