@@ -23,11 +23,6 @@ main {
   margin-top: 150px;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
 .copyright p a:hover {
   font-weight: bold;
   color: black;
