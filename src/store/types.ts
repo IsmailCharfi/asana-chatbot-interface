@@ -52,6 +52,7 @@ export interface Config {
   openIcon: string;
   closeIcon: string;
   showEmoji: boolean;
+  showMic: boolean;
   showPreview: boolean;
   sendMessageApiCall:
     | ((

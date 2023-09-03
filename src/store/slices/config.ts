@@ -31,6 +31,7 @@ const initialState: ConfigState = {
     firstMessage:
       "Bonjour! je suis votre assistant Asana n'hésitez pas à me poser des questions!",
     showEmoji: true,
+    showMic: true,
     showPreview: true,
     sendMessageApiCall: null,
     onOpen: () => {},
