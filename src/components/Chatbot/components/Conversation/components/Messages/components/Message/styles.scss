@@ -1,57 +1,57 @@
 @import "../../../../../../../../scss/common";
 
 .asana-chat-message {
-  margin: 10px;
-  display: flex;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  margin: 10px !important;
+  display: flex !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
 
   &-client {
-    flex-direction: row-reverse;
+    flex-direction: row-reverse !important;
   }
 }
 
 .asana-chat-message-enter {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .asana-chat-message-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
+  opacity: 1 !important;
+  transition: opacity 300ms ease-in !important;
 }
 
 .asana-chat-message-exit {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .asana-chat-message-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-out;
+  opacity: 0 !important;
+  transition: opacity 300ms ease-out !important;
 }
 
 .asana-chat-client {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  color: var(--asana-chat-primaryTextColor);
+  display: flex !important;
+  flex-direction: column !important;
+  margin-left: auto !important;
+  color: var(--asana-chat-primaryTextColor) !important;
 
   .asana-chat-message-text {
     @include message-bubble(var(--asana-chat-primary));
 
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
   }
 
   .asana-chat-timestamp {
-    align-self: flex-end;
+    align-self: flex-end !important;
   }
 }
 
 .asana-chat-response {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: var(--asana-chat-secondaryTextColor);
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  color: var(--asana-chat-secondaryTextColor) !important;
 
   .asana-chat-message-text {
     @include message-bubble(var(--asana-chat-secondary));
@@ -61,22 +61,22 @@
 /* For markdown elements created with default styles */
 .asana-chat-message-text {
   p {
-    margin: 0;
+    margin: 0 !important;
   }
 
   img {
-    width: 100%;
-    object-fit: contain;
+    width: 100% !important;
+    object-fit: contain !important;
   }
 }
 
 .asana-chat-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  margin-right: 10px;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 100% !important;
+  margin-right: 10px !important;
 
   &-client {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 10px !important;
   }
 }

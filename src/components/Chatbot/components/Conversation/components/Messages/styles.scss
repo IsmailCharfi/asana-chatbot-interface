@@ -1,9 +1,9 @@
 .asana-chat-messages-container {
-  height: 50vh;
-  max-height: 410px;
-  overflow-y: scroll;
-  padding-top: 10px;
-  background-color: white;
-  scroll-behavior: smooth
+  height: 50vh !important;
+  max-height: 410px !important;
+  overflow-y: scroll !important;
+  padding-top: 10px !important;
+  background-color: white !important;
+  scroll-behavior: smooth !important;
 }
 

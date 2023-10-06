@@ -2,50 +2,50 @@
 @import "~emoji-mart/css/emoji-mart.css";
 
 .asana-chat-conversation-container {
-  border-radius: 10px;
-  box-shadow: 0px 2px 10px 1px var(--asana-chat-shadow);
-  width: var(--asana-chat-width);
-  position: relative;
-  transition: width 0.5s ease;
+  border-radius: 10px !important;
+  box-shadow: 0px 2px 10px 1px var(--asana-chat-shadow) !important;
+  width: var(--asana-chat-width) !important;
+  position: relative !important;
+  transition: width 0.5s ease !important;
 
   &.active {
-    opacity: 1;
-    transform: translateY(0px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1 !important;
+    transform: translateY(0px) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
   }
 
   &.hidden {
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: -1 !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
   }
 }
 
 .asana-chat-close-widget-container {
-  height: max-content;
-  width: max-content;
+  height: max-content !important;
+  width: max-content !important;
 }
 
 .asana-chat-conversation-container-enter {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .asana-chat-conversation-container-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
+  opacity: 1 !important;
+  transition: opacity 300ms ease-in !important;
 }
 
 .asana-chat-conversation-container-exit {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .asana-chat-conversation-container-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-out;
+  opacity: 0 !important;
+  transition: opacity 300ms ease-out !important;
 }
 
 .emoji-mart-preview {
-  display: none;
+  display: none !important;
 }

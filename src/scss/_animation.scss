@@ -9,10 +9,10 @@
   -moz-animation-name: $animation;
   -moz-animation-fill-mode: forwards; 
 
-  animation-delay: $delay;
-  animation-duration: $duration;
-  animation-name: $animation;
-  animation-fill-mode: forwards; 
+  animation-delay: $delay !important;
+  animation-duration: $duration !important;
+  animation-name: $animation !important;
+  animation-fill-mode: forwards !important; 
 }
 
 @mixin keyframes ($animation-name) {

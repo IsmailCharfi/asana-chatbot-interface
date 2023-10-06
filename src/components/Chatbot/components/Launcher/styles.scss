@@ -2,18 +2,18 @@
 
 .asana-chat-launcher {
   @include animation(0, 0.5s, slide-in);
-  align-self: flex-end;
-  background-color: var(--asana-chat-primary);
-  border: 0;
-  border-radius: 50%;
-  box-shadow: 0px 2px 10px 1px var(--asana-chat-shadow);
-  height: 60px;
-  margin-top: 10px;
-  cursor: pointer;
-  width: 60px;
+  align-self: flex-end !important;
+  background-color: var(--asana-chat-primary) !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 2px 10px 1px var(--asana-chat-shadow) !important;
+  height: 60px !important;
+  margin-top: 10px !important;
+  cursor: pointer !important;
+  width: 60px !important;
 
   &:focus {
-    outline: none;
+    outline: none !important;
   }
 }
 
@@ -22,55 +22,55 @@
 }
 
 .asana-chat-close-launcher {
-  width: 20px;
+  width: 20px !important;
   @include animation(0, 0.5s, rotation-lr);
 }
 
 
 .asana-chat-tooltip {
-  cursor: pointer;
-  opacity: 1;
-  display: block;
-  position: absolute;
-  width: 200px;
-  right: 70px;
-  bottom: 0;
-  color: black;
-  padding: 5px 10px;
-  border-radius: 10px;
-  background: white;
-  border: 1px solid rgba(165, 164, 164, 0.9);
-  box-shadow: 0 0 3px var(--asana-chat-shadow);
+  cursor: pointer !important;
+  opacity: 1 !important;
+  display: block !important;
+  position: absolute !important;
+  width: 200px !important;
+  right: 70px !important;
+  bottom: 0 !important;
+  color: black !important;
+  padding: 5px 10px !important;
+  border-radius: 10px !important;
+  background: white !important;
+  border: 1px solid rgba(165, 164, 164, 0.9) !important;
+  box-shadow: 0 0 3px var(--asana-chat-shadow) !important;
 }
 
 .asana-chat-tooltip:after {
   content: "";
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-left: 10px solid white;
-  position: absolute;
-  bottom: 15px;
-  right: -10px;
+  border-top: 10px solid transparent !important;
+  border-bottom: 10px solid transparent !important;
+  border-left: 10px solid white !important;
+  position: absolute !important;
+  bottom: 15px !important;
+  right: -10px !important;
 }
 
 .asana-chat-tooltip:before {
-  right: 1px;
+  right: 1px !important;
 }
 
 .asana-chat-tooltip-enter {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .asana-chat-tooltip-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
+  opacity: 1 !important;
+  transition: opacity 300ms ease-in !important;
 }
 
 .asana-chat-tooltip-exit {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .asana-chat-tooltip-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-out;
+  opacity: 0 !important;
+  transition: opacity 300ms ease-out !important;
 }

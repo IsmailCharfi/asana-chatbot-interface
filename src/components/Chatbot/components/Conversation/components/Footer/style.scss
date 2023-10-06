@@ -1,85 +1,85 @@
 .asana-chat-sender {
-  align-items: flex-end;
-  background-color: var(--asana-chat-grey-2);
-  border-radius: 0 0 10px 10px;
-  display: flex;
-  justify-content: space-between;
-  height: max-content;
-  max-height: 95px;
-  min-height: 45px;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
+  align-items: flex-end !important;
+  background-color: var(--asana-chat-grey-2) !important;
+  border-radius: 0 0 10px 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  height: max-content !important;
+  max-height: 95px !important;
+  min-height: 45px !important;
+  overflow: hidden !important;
+  padding: 10px !important;
+  position: relative !important;
 
   &.expand {
-    height: 55px;
+    height: 55px !important;
   }
 }
 
 .asana-chat-new-message {
-  background-color: "white";
-  border: 0;
-  border-radius: 5px;
-  padding: 10px 5px;
-  resize: none;
-  width: calc(100% - 75px);
+  background-color: "white" !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  padding: 10px 5px !important;
+  resize: none !important;
+  width: calc(100% - 75px) !important;
 
   &:focus {
-    outline: none;
+    outline: none !important;
   }
 
   &.expand {
-    height: 40px;
+    height: 40px !important;
   }
 }
 
 .asana-chat-input {
-  display: block;
-  height: 100%;
-  line-height: 20px;
-  max-height: 78px;
-  overflow-y: auto;
-  user-select: text;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  display: block !important;
+  height: 100% !important;
+  line-height: 20px !important;
+  max-height: 78px !important;
+  overflow-y: auto !important;
+  user-select: text !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
 
   &:focus-visible {
-    outline: none;
+    outline: none !important;
   }
 
   &[placeholder]:empty::before {
-    content: attr(placeholder);
-    color: var(--asana-chat-grey-0); 
+    content: attr(placeholder) !important;
+    color: var(--asana-chat-grey-0) !important; 
   }
 }
 
 .asana-chat-footer-icon {
-  background: var(--asana-chat-grey-2);
-  border: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0.5rem;
+  background: var(--asana-chat-grey-2) !important;
+  border: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0.5rem !important;
 
   &.active {
-    cursor: pointer;
+    cursor: pointer !important;
   }
 }
 
 .asana-chat-send,
 .asana-chat-mic {
-  height: 25px;
+  height: 25px !important;
 }
 
 .asana-chat-message-disable {
-  background-color: var(--asana-chat-grey-2);
-  cursor: not-allowed;
+  background-color: var(--asana-chat-grey-2) !important;
+  cursor: not-allowed !important;
 }
 
 @media screen and (max-width: 800px)  {
   .asana-chat-sender {
-    border-radius: 0;
-    flex-shrink: 0;
+    border-radius: 0 !important;
+    flex-shrink: 0 !important;
   }
 }
 

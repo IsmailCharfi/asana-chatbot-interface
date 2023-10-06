@@ -23,9 +23,7 @@ To use the Asana Chatbot, follow these steps:
    ```javascript
    AsanaChatbot({
      element: "#chatbot",
-     backgroundImage: null,
      apiPath: "https://your-api.com/chat",
-     width: "30vw",
      // Add other configuration options here
    });
    ```
@@ -35,9 +33,7 @@ To use the Asana Chatbot, follow these steps:
    ```javascript
    AsanaChatbot({
      element: document.querySelector("#chatbot"),
-     backgroundImage: null,
      apiPath: "https://your-api.com/chat",
-     width: "30vw",
      // Add other configuration options here
    });
    ```
@@ -66,7 +62,7 @@ The following configuration options are available for customizing the behavior a
 | `headerIcon`         | `string`                                                                                                     | `Asana logo`            | No                                          | The URL of the icon to display in the chatbot header.                      |
 | `avatar`             | `string`                                                                                                     | `Asana logo`             | No                                          | The URL of the avatar image to display in the chatbot interface.           |
 | `backgroundImage`    | `string`                                                                                                     | `default background image`             | No                                          | The URL of the background image for the chatbot interface.                 |
-| `width`              | `string`                                                                                                     | `30vw`             | No                                          | The width of the chatbot interface. You can use CSS units like `px`, `%`, or `vw`. |
+| `width`              | `string`                                                                                                     | `min(100vw, 450px)`             | No                                          | The width of the chatbot interface. You can use CSS units like `px`, `%`, or `vw`. |
 | `firstMessage`       | `string`                                                                                                     | "Bonjour je suis votre assistant Asana...."             | No                                          | The initial message to display when the chatbot is opened.                         |
 | `errorMessage`       | `string`                                                                                                     | "Une erreur est survenue, merci de réessayer plus tard"             | No                                          | The error message to display if there is a problem with the chatbot API.           |
 | `openIcon`           | `string`                                                                                                     | `Asana logo`             | No                                          | The URL of the icon to display when the chatbot is closed.                 |
@@ -84,6 +80,16 @@ The following configuration options are available for customizing the behavior a
 ## Customization
 
 You can override the style of the chatbot by overriding the CSS rules with classes starting with `asana-chatbot`. This allows you to customize the appearance of the chatbot to match your website's design. Here's an example of overriding CSS styles:
+
+```css
+/* Your custom CSS file */
+.asana-chatbot-xxxxx {
+  background-color: #f0f0f0 !important;
+  /* Add any other custom styles here */
+}
+```
+
+> **Note:** We've made an update to the library styles, and all styles are now set to `!important`. If you need to override these styles, make sure to use `!important` in your own CSS.
 
 ## Development
 
