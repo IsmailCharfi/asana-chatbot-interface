@@ -9,6 +9,7 @@ const DEFAULT_CLOSE_ICON =
 const initialState: ConfigState = {
   config: {
     apiPath: null,
+    historyLimit: 3,
     primaryColor: "#f06a6a",
     secondaryColor: "#f4f7f9",
     primaryTextColor: "#ffffff",

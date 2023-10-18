@@ -49,6 +49,7 @@ export interface Config {
   width: string;
   firstMessage: string;
   errorMessage: string;
+  historyLimit: number;
   openIcon: string;
   closeIcon: string;
   showEmoji: boolean;

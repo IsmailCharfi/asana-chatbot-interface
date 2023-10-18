@@ -66,7 +66,10 @@ const slice = createSlice({
     },
     pushHistory(
       state: MessagesState,
-      action: PayloadAction<{ messageHistory: MessageHistory }>
+      action: PayloadAction<{
+        messageHistory: MessageHistory;
+        historyLimit: number;
+      }>
     ) {
       const array = [...state.history];
 
@@ -119,9 +122,9 @@ export const setLastMessage =
   };
 
 export const pushHistory =
-  (messageHistory: MessageHistory): AppThunk =>
+  (messageHistory: MessageHistory, historyLimit: number): AppThunk =>
   async (dispatch) => {
-    dispatch(slice.actions.pushHistory({ messageHistory }));
+    dispatch(slice.actions.pushHistory({ messageHistory, historyLimit }));
   };
 
 export const clearHistory = (): AppThunk => async (dispatch) => {

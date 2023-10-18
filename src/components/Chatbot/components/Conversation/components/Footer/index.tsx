@@ -51,6 +51,7 @@ export default function Footer() {
     sendMessageApiCall,
     messages,
     showPreview,
+    historyLimit,
     token,
   } = useSelector((state) => ({
     messages: state.messages.messages,
@@ -65,6 +66,7 @@ export default function Footer() {
     onWaiting: state.config.config.onWaiting,
     sendMessageApiCall: state.config.config.sendMessageApiCall,
     showPreview: state.config.config.showPreview,
+    historyLimit: state.config.config.historyLimit,
     showMic: state.config.config.showMic,
     token: state.config.token,
   }));
@@ -139,14 +141,19 @@ export default function Footer() {
   const showError = () => {
     dispatch(addResponseMessage(errorMessage));
     dispatch(toggleMsgLoader());
+    dispatch(toggleInputDisabled());
+    inputRef.current?.focus();
   };
 
   const success = (userInput: string, response: string) => {
     dispatch(
-      pushHistory({
-        human: userInput,
-        bot: response,
-      })
+      pushHistory(
+        {
+          human: userInput,
+          bot: response,
+        },
+        historyLimit
+      )
     );
     onReceiveMessage(response);
     dispatch(addResponseMessage(response));
